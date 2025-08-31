@@ -1,0 +1,27 @@
+CREATE TABLE IF NOT EXISTS users (
+  id UUID PRIMARY KEY,
+  username TEXT UNIQUE NOT NULL,
+  passhash TEXT NOT NULL,
+  coins BIGINT NOT NULL DEFAULT 0,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS bets (
+  id UUID PRIMARY KEY,
+  user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  round_id TEXT NOT NULL,
+  selection TEXT NOT NULL,
+  amount BIGINT NOT NULL CHECK (amount > 0),
+  result TEXT,
+  payout BIGINT DEFAULT 0,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS state (
+  key TEXT PRIMARY KEY,
+  value JSONB NOT NULL
+);
+
+INSERT INTO state (key, value)
+  VALUES ('jackpot', '{"coins": 0}')
+  ON CONFLICT (key) DO NOTHING;

@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: spin-game-api
+    env: node
+    rootDir: backend
+    buildCommand: npm install && npm run db:init
+    startCommand: npm start
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: spin-game-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CORS_ORIGIN
+        value: https://your-frontend.onrender.com
+    autoDeploy: true
+
+databases:
+  - name: spin-game-db
+    plan: free
