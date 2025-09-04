@@ -4784,7 +4784,7 @@ try {
   for (let i = 0; i < 2; i++) {
     const b = bots.splice(Math.floor(Math.random()*bots.length), 1)[0];
     // tạo số thắng nguyên (không lẻ) và khác nhau mỗi vòng
-    const baseBet = Math.floor(Math.random() * 10000) + 2000; // 2000–10000
+    const baseBet = Math.floor(Math.random() * 1000) + 1000; // 2000–10000
     const amount  = Math.round(baseBet * MULT);
 
     TopWinnersReal.add({
@@ -6378,7 +6378,7 @@ function computePayoutFromBets(bets, selectedName, salad=false) {
   function makeFake(selected) {
     const name   = pick(NAMES);
     const seed   = `${name}-${Date.now()}-${Math.random()}`;
-    const amount = roundNice(1000 + Math.random()*20000); // 1000 → ~21000
+    const amount = roundNice(1000 + Math.random()*1000); // 1000 → ~10000
     return {
       name,
       avatar: `https://i.pravatar.cc/80?u=${encodeURIComponent(seed)}`,
