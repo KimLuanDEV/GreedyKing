@@ -5451,7 +5451,7 @@ const hotkeyMap = {
 
 // Toggle panel bằng phím tắt Ctrl + M
   document.addEventListener("keydown", (e) => {
-  if (e.ctrlKey && e.key.toLowerCase() === "m") {
+  if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "m") {
   e.preventDefault(); // tránh select all
   const panel = document.getElementById("adminPanel");
   panel.style.display = (panel.style.display === "none" || panel.style.display === "") 
@@ -5969,8 +5969,8 @@ function showLogin() {
   window.addEventListener("load", () => {
   writeJackpot(readJackpot());
   if (localStorage.getItem("loggedIn") === "true") {
-  document.getElementById("loginOverlay").style.display = "none";
-  document.querySelector(".game-container").style.display = "flex";
+  document.getElementById("loginOverlay").style.display = "flex";
+  document.querySelector(".game-container").style.display = "none";
   }
 });
 
