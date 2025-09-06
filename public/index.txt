@@ -664,7 +664,7 @@ button:hover {
 
 /* Bên trái (vòng quay + kết quả) */
 .left-panel {
-  flex: 1.3;
+  flex: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -673,7 +673,7 @@ button:hover {
 
 /* Bên phải (cược + ví + lịch sử) */
 .right-panel {
-  flex: 1;
+  flex: 1.2;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -3540,7 +3540,7 @@ h1 {
 .balance-box {
   position: relative;
   align-items: center;
-  gap: 35px;
+  gap: 45px;
   padding: 20px 26px;
   border-radius: 16px;
   background: linear-gradient(160deg, #151515, #1f1f1f);
@@ -3781,7 +3781,7 @@ h1 {
   position:absolute; inset:0;
   background:
     linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,.55)),
-    url("https://static8.depositphotos.com/1003813/973/v/450/depositphotos_9732423-stock-illustration-the-vector-abstract-play-card.jpg")
+    url("https://i.pinimg.com/736x/e7/1a/9c/e71a9c9078963c9f146d7af141dbaf02.jpg")
       center/cover no-repeat;
   z-index:-1;
   filter:saturate(1.1);             /* màu rực hơn chút */
@@ -3809,7 +3809,7 @@ h1 {
 /* ==== RIGHT PANEL – CASINO BACKDROP ==== */
 .right-panel{
   /* đổi URL này thành ảnh bạn thích */
-  --rp-bg: url("https://img.freepik.com/premium-vector/abstract-poker-suits-background_196637-317.jpg?w=740");
+  --rp-bg: url("https://wallpaper.dog/large/20503711.jpg");
 
   position: relative;
   z-index: 0;                 /* để ::before/-1 không rơi ra ngoài */
@@ -4190,6 +4190,275 @@ h1 {
   .wheel-ring{ --size: 300px; --gap:22px; }
 }
 
+/* ===== BET HISTORY – LED CASINO ===== */
+:root{
+  --bh-glow:#22d3ee; --bh-accent:#38bdf8; --bh-border:#34d399;
+  --bh-text:#e5e7eb; --bh-muted:#94a3b8; --bh-card:#0b1020cc;
+  --bh-win:#22c55e; --bh-lose:#ef4444;
+}
+.bh-btn{ padding:10px 14px; border-radius:12px; font-weight:800; letter-spacing:.2px; color:#e5e7eb;
+  background: linear-gradient(180deg, rgba(15,23,42,.85), rgba(2,6,23,.85));
+  border:1px solid rgba(148,163,184,.25);
+  box-shadow: inset 0 0 12px rgba(34,211,238,.12), 0 6px 18px rgba(0,0,0,.45);
+}
+.bh-btn-ghost{ padding:8px 12px; border-radius:10px; color:#cbd5e1; border:1px solid rgba(100,116,139,.35);
+  background: linear-gradient(180deg, rgba(15,23,42,.4), rgba(15,23,42,.2));
+}
+.bh-btn-primary{ border-color: rgba(56,189,248,.45); }
+.bh-btn-danger{ border-color: rgba(239,68,68,.45); background: linear-gradient(180deg, rgba(80,18,26,.7), rgba(44,2,11,.85)); }
+
+.historyBetModal{ backdrop-filter: blur(6px);
+  background: radial-gradient(60% 80% at 50% 50%, rgba(0,255,210,0.08), rgba(0,0,0,0.65));
+}
+.bh-modal{
+  width: 860px; max-width: calc(100vw - 24px); max-height: calc(100vh - 24px);
+  display:flex; flex-direction:column; overflow:hidden; color: var(--bh-text);
+  background: linear-gradient(180deg, rgba(10,12,20,.78), rgba(6,9,16,.92));
+  border:1px solid var(--bh-border); border-radius:16px;
+  box-shadow: 0 0 0 1px rgba(34,211,238,.2) inset, 0 12px 40px rgba(0,0,0,.6), 0 0 24px rgba(34,211,238,.22);
+  position:relative; animation: bhPop .18s ease-out;
+}
+@keyframes bhPop{ from{transform:translateY(8px) scale(.98);opacity:0} to{transform:translateY(0) scale(1);opacity:1} }
+
+.bh-header{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:12px 14px; border-bottom:1px solid rgba(56,189,248,.25);
+  background: linear-gradient(90deg, rgba(56,189,248,.08), rgba(56,189,248,0));
+  cursor:move; user-select:none;
+}
+.bh-title{ display:flex; gap:10px; align-items:center; font-weight:800; }
+.bh-icon{ filter: drop-shadow(0 0 8px var(--bh-glow)); }
+.bh-badge{
+  margin-left:6px; font-size:11px; color:#a7f3d0; border:1px solid rgba(52,211,153,.35);
+  padding:2px 6px; border-radius:999px; background: linear-gradient(180deg, rgba(11,17,20,.35), rgba(11,17,20,.15));
+  box-shadow: inset 0 0 10px rgba(34,211,238,.15);
+}
+
+.bh-toolbar{ display:flex; gap:12px; justify-content:space-between; padding:10px 12px 0; flex-wrap:wrap; }
+.bh-filters{ display:flex; gap:10px; flex-wrap:wrap; }
+.bh-field{
+  display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:10px;
+  background: linear-gradient(180deg, rgba(18,26,40,.65), rgba(8,12,18,.35));
+  border:1px solid rgba(148,163,184,.2); color:var(--bh-text);
+}
+.bh-input{
+  min-width: 180px; background: rgba(2,6,12,.5); border:1px solid rgba(56,189,248,.25); color:var(--bh-text);
+  padding:8px 10px; border-radius:10px; font-weight:700; outline:none; box-shadow: inset 0 0 10px rgba(34,211,238,.12);
+}
+.bh-actions{ display:flex; gap:10px; flex-wrap:wrap; }
+
+.bh-summary{
+  display:grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap:10px;
+  padding:10px 12px; margin-top:8px;
+}
+.bh-s-item{
+  text-align:center; padding:10px; border-radius:10px;
+  border:1px solid rgba(56,189,248,.2);
+  background: linear-gradient(180deg, var(--bh-card), rgba(8,12,18,.75));
+  box-shadow: inset 0 0 30px rgba(34,211,238,.06);
+}
+
+.bh-list{ padding:10px 12px 14px; }
+.bh-group{
+  margin-top:12px; border-left:3px solid rgba(56,189,248,.35); padding-left:10px;
+}
+.bh-group-title{
+  color:var(--bh-accent); font-weight:800; text-shadow:0 0 12px rgba(56,189,248,.35);
+  margin-bottom:6px;
+}
+
+/* Item card */
+.bh-item{
+  position:relative; overflow:hidden;
+  border:1px solid rgba(148,163,184,.25); border-radius:12px; padding:10px 12px; margin-bottom:8px;
+  background: linear-gradient(180deg, rgba(15,23,42,.6), rgba(2,6,23,.6));
+  box-shadow: inset 0 0 12px rgba(34,211,238,.1);
+}
+.bh-item .bh-top{
+  display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap; font-size:13px; color:var(--bh-muted);
+}
+.bh-item .bh-main{
+  display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:6px;
+}
+.bh-dot{
+  width:10px; height:10px; border-radius:50%;
+  box-shadow: 0 0 10px rgba(34,211,238,.35);
+  background: radial-gradient(circle at 30% 30%, #94a3b8, #475569);
+}
+.bh-item.win .bh-dot{ background: radial-gradient(circle at 30% 30%, #dcfce7, #22c55e); box-shadow: 0 0 10px rgba(34,197,94,.8); }
+.bh-item.lose .bh-dot{ background: radial-gradient(circle at 30% 30%, #fecaca, #ef4444); box-shadow: 0 0 10px rgba(239,68,68,.8); }
+
+.bh-badge{
+  border:1px solid rgba(148,163,184,.3); padding:2px 6px; border-radius:999px; font-size:12px; color:#cbd5e1;
+  background: linear-gradient(180deg, rgba(15,23,42,.4), rgba(15,23,42,.2));
+}
+.bh-badge-win{ border-color: rgba(34,197,94,.5); color:#bbf7d0; }
+.bh-badge-lose{ border-color: rgba(239,68,68,.5); color:#fecaca; }
+
+.bh-amt{ font-weight:800; }
+.bh-kq b{ color:#e5e7eb; }
+.bh-pl{ font-weight:800; }
+.bh-pl.plus{ color:#bbf7d0; }
+.bh-pl.minus{ color:#fecaca; }
+
+.scroll-y{ max-height: 55vh; overflow:auto; }
+
+.bh-scanline{
+  pointer-events:none; position:absolute; left:0; right:0; top:0; height:80px;
+  background: linear-gradient(180deg, rgba(34,211,238,.25), rgba(34,211,238,0));
+  filter: blur(10px); opacity:.5; animation: bhScan 3s linear infinite;
+}
+@keyframes bhScan{
+  0%{ transform: translateY(-60px); opacity:.0; }
+  10%{opacity:.5;}
+  50%{ transform: translateY(120%); opacity:.25; }
+  100%{ transform: translateY(140%); opacity:0; }
+}
+
+
+/* ===== RESKIN .chip → PHÍM BẤM ĐIỆN TỬ ===== */
+:root{
+  --key-w: 88px;          /* rộng */
+  --key-h: 64px;          /* cao */
+  --key-r: 16px;          /* bo góc */
+  --key-font: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial;
+}
+
+/* base: biến chip tròn → nút vuông điện tử */
+.chip{
+  width: var(--key-w); height: var(--key-h);
+  border-radius: var(--key-r);
+  background: #0b1220 !important;
+  border: 0;
+  position: relative; isolation: isolate;
+  display: inline-grid; place-items: center;
+  cursor: pointer; overflow: hidden;
+  box-shadow:
+    0 14px 30px rgba(0,0,0,.35),     /* đổ bóng ngoài */
+    inset 0 0 0 1px rgba(255,255,255,.10);  /* viền mảnh */
+  transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+  /* theme mặc định; các mệnh giá sẽ override */
+  --key-on:  #32f5d2;    /* neon */
+  --key-off: #0f172a;    /* nền tối */
+  --key-glow: rgba(0,255,200,.35);
+}
+
+/* mặt kính + lưới mạch điện */
+.chip::before{
+  content:"";
+  position:absolute; inset:0;
+  background:
+    /* scanline mịn */
+    repeating-linear-gradient(0deg, rgba(255,255,255,.03) 0 1px, transparent 1px 3px),
+    /* grid neon rất nhẹ */
+    repeating-linear-gradient(90deg, rgba(0,255,200,.06) 0 1px, transparent 1px 18px),
+    repeating-linear-gradient(0deg,   rgba(0,255,200,.06) 0 1px, transparent 1px 18px),
+    linear-gradient(180deg, #0d1628, #0a1020);
+  mix-blend-mode: screen;
+  opacity:.9;
+  z-index:0;
+}
+
+/* ánh sáng viền + nhịp thở nhẹ */
+.chip{
+  box-shadow:
+    0 14px 30px rgba(0,0,0,.35),
+    0 0 26px var(--key-glow),
+    inset 0 0 0 1px rgba(255,255,255,.10);
+  animation: keyBreath 2.6s ease-in-out infinite;
+}
+@keyframes keyBreath{
+  0%,100%{ box-shadow: 0 14px 30px rgba(0,0,0,.35), 0 0 16px var(--key-glow), inset 0 0 0 1px rgba(255,255,255,.10); }
+  50%    { box-shadow: 0 14px 30px rgba(0,0,0,.35), 0 0 28px var(--key-glow), inset 0 0 0 1px rgba(255,255,255,.12); }
+}
+
+/* highlight quét */
+.chip::after{
+  content:""; position:absolute; inset:-30%;
+  background: linear-gradient(75deg, transparent 45%, rgba(255,255,255,.22) 50%, transparent 55%);
+  transform: translateX(-120%) rotate(8deg);
+  filter: blur(1px); pointer-events:none; z-index:2;
+}
+.chip:hover::after{ animation: shineSweep 1.2s ease; }
+@keyframes shineSweep{ to{ transform: translateX(120%) rotate(8deg); } }
+
+/* text mệnh giá (LED) — dùng span.denom cũ nếu có, ngược lại tạo ảo bằng data-value */
+.chip > .denom{
+  position: relative; z-index:3; padding:0 6px;
+  font: 800 18px/1 var(--key-font); letter-spacing: .6px;
+  color: var(--key-on); text-shadow:
+    0 0 8px var(--key-glow),
+    0 0 14px var(--key-glow);
+  transform: translateY(1px);
+}
+.chip:not(:has(.denom))::marker{} /* noop để tránh lint */
+.chip:not(:has(.denom))::before{ } /* giữ slot */
+
+/* state */
+.chip:hover{ transform: translateY(-2px); }
+.chip:active{ transform: translateY(1px) scale(.985); filter: brightness(.98); }
+.chip.is-selected{
+  outline: 0;
+  box-shadow:
+    0 14px 30px rgba(0,0,0,.35),
+    0 0 36px var(--key-glow),
+    inset 0 0 0 2px rgba(255,255,255,.14);
+}
+.chip.is-disabled{ filter: grayscale(.85) brightness(.8); cursor: not-allowed; }
+
+/* ===== MÀU THEO MỆNH GIÁ (giữ class cũ: chip-10, chip-50, …) ===== */
+.chip-10   { --key-on:#22c55e; --key-glow: rgba(34,197,94,.35); }
+.chip-50   { --key-on:#0ea5a4; --key-glow: rgba(14,165,164,.35); }
+.chip-100  { --key-on:#3b82f6; --key-glow: rgba(59,130,246,.35); }
+.chip-500  { --key-on:#a855f7; --key-glow: rgba(168,85,247,.35); }
+.chip-1k   { --key-on:#f59e0b; --key-glow: rgba(245,158,11,.35); }
+.chip-2k   { --key-on:#fb7185; --key-glow: rgba(251,113,133,.35); }
+.chip-5k   { --key-on:#ef4444; --key-glow: rgba(239,68,68,.35); }
+.chip-10k  { --key-on:#c8a24a; --key-glow: rgba(255,215,0,.38); }
+
+/* size biến thể nếu cần */
+.chip.sm{ --key-w:74px; --key-h:52px; --key-r:12px; }
+.chip.lg{ --key-w:104px; --key-h:74px; --key-r:18px; }
+
+/* trợ năng: tắt motion */
+@media (prefers-reduced-motion: reduce){
+  .chip{ animation:none; }
+  .chip:hover::after{ animation:none; }
+}
+
+
+
+/* LED FRAME: minimal */
+.led-frame.minimal{
+  --radius:18px; --glow: rgba(0,255,200,.28);
+  position:relative; border-radius:var(--radius); padding:16px;
+  background: linear-gradient(180deg,#0c1222,#0a0f1b);
+  box-shadow: 0 0 24px var(--glow), inset 0 0 0 1px rgba(255,255,255,.12);
+}
+.led-frame.minimal::before{
+  content:""; position:absolute; inset:6px; border-radius:calc(var(--radius)-6px);
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,.55);
+  mix-blend-mode:screen; pointer-events:none;
+}
+
+
+/* LED FRAME: dots */
+.led-frame.dots{
+  --radius:18px; --dot:#32f5d2; --glow:rgba(0,255,200,.32);
+  position:relative; border-radius:var(--radius); padding:18px;
+  background:#0b1220; box-shadow:0 0 28px var(--glow), inset 0 0 0 1px rgba(255,255,255,.1);
+}
+.led-frame.dots::after{
+  content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+  background:
+    radial-gradient(circle at 10px 10px, var(--dot) 0 40%, transparent 42%) 0 0/22px 22px repeat;
+  -webkit-mask: radial-gradient(circle, transparent calc(50% - 14px), #000 calc(50% - 10px),
+                                          #000 calc(50% + 10px), transparent calc(50% + 14px));
+          mask: radial-gradient(circle, transparent calc(50% - 14px), #000 calc(50% - 10px),
+                                          #000 calc(50% + 10px), transparent calc(50% + 14px));
+  filter: drop-shadow(0 0 10px var(--glow));
+}
+
 
  </style>
 </head>
@@ -4249,13 +4518,7 @@ h1 {
 </div>
 
 
-
-
-
  <div class="game-container">
-
- <div class="led-frame"></div>
-
 
 <!-- Brand Logo
 <a class="brand-logo" href="#" aria-label="Greedy Casino Home">
@@ -4281,6 +4544,13 @@ h1 {
 
 
 <div class="stage">
+
+<!-- đặt bên trong .stage, dưới .door/.hub -->
+<div class="halo-min-bright theme-bright-cyan" aria-hidden="true"></div>
+
+
+
+
 
 <!--
 <div class="casino-ring"></div>
@@ -4343,15 +4613,19 @@ h1 {
   </div>
 
 
+
+
 <br> 
+
+
 <div class="balance-box">
- <div class="chip-selector">
-  <div class="chip" data-value="1">1</div>
-  <div class="chip" data-value="10">10</div>
-  <div class="chip" data-value="50">50</div>
-  <div class="chip" data-value="100">100</div>
-  <div class="chip" data-value="1000">1000</div>
+  <div class="chip-selector">
+  <div class="chip" data-value="10"> <span class="denom">10</span> </div>
+  <div class="chip" data-value="50"> <span class="denom">50</span> </div>
+  <div class="chip" data-value="100"> <span class="denom">100</span> </div>
+  <div class="chip" data-value="1000"> <span class="denom">1000</span>  </div>
  </div>
+
 
 <div>
 <button id="openAutoBetBtn" class="ab-launch" type="button">
@@ -4399,7 +4673,10 @@ h1 {
 </div>
 </div>
 <br>
-<br>
+<div>
+<h4 class="brand-greedy" >🥗 GREEDY KING 🥗</h4>
+</div>
+
 <!--
 
 <div class="jackpot-box">
@@ -4433,7 +4710,7 @@ h1 {
 <div class="right-panel">
 
 <div class="time-display">
-<h1 class="brand-dice" aria-hidden="true">🎰JACKPOT🎰</h1> 
+<h1 class="brand-dice" aria-hidden="true">🎰 GREAT PARTY🎰</h1> 
 <h2 class="brand-dice" aria-hidden="true">BIG WIN 1.000.000 COIN </h2>
 <div class="brand-greedy">  </div>
 <div class="jackpot-info">
@@ -4449,10 +4726,10 @@ h1 {
 
 
 <!-- Nút mở lịch sử -->
-<button id="openHistoryBtn"  class="ab-launch">📜 Lịch sử cược</button>
-<button id="openHistoryModal" class="ab-launch">📜 Lịch sử code</button>
-<button id="openTransferHistoryBtn" class="ab-launch">💸 Lịch sử chuyển xu</button>
-<button id="logoutBtn" class="ab-launch">🚪 Đăng xuất</button>
+<button id="openHistoryBtn"  class="bh-btn">📜 Lịch sử cược</button>
+<button id="openHistoryModal" class="bh-btn">📜 Lịch sử code</button>
+<button id="openTransferHistoryBtn" class="bh-btn">💸 Lịch sử chuyển xu</button>
+<button id="logoutBtn" class="bh-btn">🚪 Đăng xuất</button>
 
 
 
@@ -4470,28 +4747,24 @@ h1 {
 
 
 
-<div class="ab-launch">
+
 
 <!-- Thông tin người dùng -->
-<div class="userinfo-led" id="userInfoBar">
+<div class="bh-btn" id="userInfoBar">
 <img src="https://i.pravatar.cc/80" alt="Avatar" class="user-avatar">
 <input type="file" id="avatarUpload" accept="image/*" style="display:none;">
 <div class="user-details">
 <div class="user-name">👤 Tên: <span id="userNameDisplay"></span></div>
 <div class="user-id">🆔: <span id="userIdDisplay"></span></div>
-<button id="changeNameBtn" class="avatar-btn">✏️ Đổi tên</button>
+<button id="changeNameBtn" class="bh-btn">✏️ Đổi tên</button>
+</div>
+</div>
+<div class="bh-btn" id="notification"></div>
 
-</div>
-</div>
-<br><br><br><br><br><br><br>
-</div>
-<div class="ab-launch" id="notification"></div>
-<br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br<br><br><br<br><br><br<br><br><br<br><br><br><br><br<br><br><br<br><br><br<br><br><br<br><br><br<br><br><br<br><br><br<br><br><br<br><br><br<br><br>
 
-<div>
-<h4 class="brand-greedy" >🥗 GREEDY KING 🥗</h4>
-</div>
-<br><br><br><br><br><br><br><br>
+
+
 </div>
 
 
@@ -7977,6 +8250,8 @@ document.getElementById("ab-save") ?.addEventListener("click", ()=> setTimeout(s
 // 4) Khởi tạo trạng thái khi load
 document.addEventListener('DOMContentLoaded', setAutoBetButtonState);
 </script>
+
+
 
 
 <div id="jackpotEffect"></div>
