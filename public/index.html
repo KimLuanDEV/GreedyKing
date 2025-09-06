@@ -3459,6 +3459,82 @@ h1 {
 }
 
 
+/* Rung nhẹ khi thiếu tiền */
+@keyframes shakeX { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-4px)} 40%{transform:translateX(4px)} 60%{transform:translateX(-3px)} 80%{transform:translateX(3px)} }
+.shake-x{ animation: shakeX .6s ease; }
+
+/* Nhấp nháy ghi chú cảnh báo */
+@keyframes warnPulse { 0%{text-shadow:0 0 0 rgba(239,68,68,0)} 50%{text-shadow:0 0 12px rgba(239,68,68,.9)} 100%{text-shadow:0 0 0 rgba(239,68,68,0)} }
+.ab-warn-pulse{ color:#fecaca !important; animation: warnPulse 1.2s ease; }
+
+/* ====== AUTO BET LAUNCH BUTTON – LED CASINO ====== */
+.ab-launch{
+  --ab1:#34d399; --ab2:#22d3ee; --ab3:#38bdf8; --txt:#e5e7eb;
+  position:relative; display:inline-flex; align-items:center; gap:10px;
+  padding:10px 16px; border-radius:16px; font-weight:800; letter-spacing:.2px;
+  color:var(--txt); background:rgba(7,12,22,.75); border:1px solid rgba(56,189,248,.35);
+  box-shadow:
+    inset 0 0 12px rgba(34,211,238,.12),
+    0 6px 16px rgba(0,0,0,.45), 0 0 22px rgba(34,211,238,.15);
+  cursor:pointer; transform:translateY(0);
+  transition: box-shadow .2s ease, transform .08s ease, border-color .2s ease, background .2s ease;
+  backdrop-filter: blur(3px);
+  overflow:hidden;
+}
+.ab-launch::before{
+  /* viền gradient động */
+  content:""; position:absolute; inset:-2px; border-radius:18px; z-index:0;
+  background:conic-gradient(from 0deg, var(--ab1), var(--ab2), var(--ab3), var(--ab1));
+  filter: blur(10px); opacity:.35; transition:opacity .2s linear;
+  animation: abGrad 3s linear infinite;
+}
+@keyframes abGrad{ to{ transform: rotate(360deg);} }
+.ab-launch::after{
+  /* viền mảnh nổi */
+  content:""; position:absolute; inset:0; border-radius:16px; z-index:0;
+  border:1px solid rgba(148,163,184,.2);
+  box-shadow: inset 0 0 12px rgba(34,211,238,.12);
+}
+.ab-launch:hover{
+  box-shadow:
+    inset 0 0 18px rgba(34,211,238,.18),
+    0 10px 26px rgba(0,0,0,.6),
+    0 0 28px rgba(34,211,238,.3);
+}
+.ab-launch:active{ transform:translateY(1px); }
+
+.ab-launch__icon{ position:relative; z-index:1; filter: drop-shadow(0 0 10px rgba(34,211,238,.6)); }
+.ab-launch__label{ position:relative; z-index:1; font-size:14px; }
+
+/* LED trạng thái */
+.ab-launch__led{
+  position:relative; z-index:1; width:11px; height:11px; border-radius:50%;
+  box-shadow: 0 0 8px rgba(2,6,23,.6) inset, 0 0 0 1px rgba(148,163,184,.25);
+  background: radial-gradient(circle at 30% 30%, #94a3b8, #475569);
+}
+.ab-launch.is-on .ab-launch__led{
+  background: radial-gradient(circle at 30% 30%, #dcfce7, #22c55e);
+  box-shadow:
+    0 0 10px rgba(34,197,94,.9),
+    0 0 0 1px rgba(34,197,94,.45),
+    inset 0 0 10px rgba(34,197,94,.6);
+}
+.ab-launch.is-on{
+  border-color: rgba(34,197,94,.5);
+  background: linear-gradient(180deg, rgba(7,20,14,.75), rgba(3,14,10,.75));
+}
+
+/* Ripple click */
+.ab-launch .ab-ripple{
+  position:absolute; border-radius:999px; transform:translate(-50%,-50%) scale(0);
+  background: radial-gradient(circle, rgba(56,189,248,.35), rgba(56,189,248,0) 60%);
+  width:220px; height:220px; pointer-events:none; z-index:0;
+  animation: abRipple .45s ease-out forwards;
+}
+@keyframes abRipple{
+  to{ transform:translate(-50%,-50%) scale(1); opacity:0; }
+}
+
 
  </style>
 </head>
@@ -3710,7 +3786,12 @@ BIG WIN 1.000.000 COIN
 
 
 
-<button id="openAutoBetBtn" class="neon-btn register-btn" style="margin-top:10px;">⚙️ Đặt cược tự động</button>
+<button id="openAutoBetBtn" class="ab-launch" type="button">
+  <span class="ab-launch__icon">⚙️</span>
+  <span class="ab-launch__label">Auto Bet</span>
+  <span class="ab-launch__led" aria-hidden="true"></span>
+</button>
+
 
 <!-- Modal Auto Bet -->
 <div id="autoBetModal" class="historyBetModal" style="display:none;">
@@ -3768,6 +3849,13 @@ BIG WIN 1.000.000 COIN
   </div>
 </div>
 
+<!-- Nút mở lịch sử -->
+<button id="openHistoryBtn"  class="ab-launch">📜 Lịch sử cược</button>
+<button id="openHistoryModal" class="ab-launch">📜 Lịch sử code</button>
+<button id="openTransferHistoryBtn" class="ab-launch">💸 Lịch sử chuyển xu</button>
+<button id="logoutBtn" class="ab-launch">🚪 Đăng xuất</button>
+
+
 
  <form id="betForm" class="bet-section" style ="display:none">
   <div  class="bet-box" data-name="Chua"><span class="icon">🍅</span><span class="bet-amount">0</span><br><small>Win 5 times</small></div>  
@@ -3783,32 +3871,10 @@ BIG WIN 1.000.000 COIN
 
 
 
-<div class="wallet">
-
-<!-- Nút mở lịch sử cược -->
-<div>
-<button id="openHistoryBtn"  class="btn-led btn-led-cyan">📜 Lịch sử cược</button>
-<br>
-
-<!-- Nút mở lịch sử code -->
-<button id="openHistoryModal" class="btn-led btn-led-cyan"">📜 Lịch sử code</button>
-<br>
-
-<!-- Nút mở lịch sử chuyển xu -->
-<button id="openTransferHistoryBtn" class="btn-led btn-led-cyan"">💸 Lịch sử chuyển xu</button>
-<br>
-</div>
-
-
-<button id="logoutBtn" class="btn-led btn-led-cyan">🚪 Đăng xuất</button>
-<br>
-
-
+<div class="ab-launch">
 
 <!-- Thông tin người dùng -->
-
 <div class="userinfo-led" id="userInfoBar">
-
 <img src="https://i.pravatar.cc/80" alt="Avatar" class="user-avatar">
 <input type="file" id="avatarUpload" accept="image/*" style="display:none;">
 <div class="user-details">
@@ -3818,13 +3884,14 @@ BIG WIN 1.000.000 COIN
 </div>
 </div>
 <br>
-<div class="notification" id="notification"></div>
 </div>
-<br><br>
+<div class="ab-launch" id="notification"></div>
+<br><br><br><br>
+
 <div>
 <h4 class="time-display" >🥗 GREEDY KING 🥗</h4>
 </div>
-<br><br><br>
+<br><br>
 </div>
 
 
@@ -7143,39 +7210,49 @@ function saveAutoBet() {
 function applyAutoBetOnce(){
   if (!AutoBet.enabled) return;
 
-  // tổng cần trừ để kiểm tra nhanh số dư
+  // 1) Tính tổng cần cho template hiện tại
   let need = 0;
-  for (const [name,amt] of Object.entries(AutoBet.tpl)) need += Math.max(0, Number(amt)||0);
-  if (need <= 0) return; // cấu hình rỗng -> bỏ qua
+  for (const [name, amt] of Object.entries(AutoBet.tpl)) {
+    need += Math.max(0, Number(amt)||0);
+  }
+  if (need <= 0) return; // không cấu hình gì thì bỏ
 
-  if (typeof balance === "number" && balance < need){
-    // thiếu tiền -> đặt được cửa nào thì đặt cửa đó theo thứ tự
+  // 2) Kiểm tra số dư bắt buộc đủ cho TẤT CẢ cửa
+  if (typeof balance !== "number") return;
+  if (balance < need){
+    // CẢNH BÁO & BỎ QUA PHIÊN NÀY (không đặt, không trừ rounds)
+    const note = document.getElementById("ab-note");
+    if (note){
+      const needStr = need.toLocaleString();
+      const balStr  = balance.toLocaleString();
+      note.textContent = `⚠️ Số dư không đủ để Auto Bet (cần ${needStr}, còn ${balStr}). Đã bỏ qua phiên này.`;
+      note.classList.add("ab-warn-pulse");
+      setTimeout(()=> note.classList.remove("ab-warn-pulse"), 1500);
+    }
+    // rung ví/số dư nếu có phần tử hiển thị
+    const walletEl = document.querySelector(".balance, #balance, .wallet, .user-balance");
+    if (walletEl){
+      walletEl.classList.add("shake-x");
+      setTimeout(()=> walletEl.classList.remove("shake-x"), 600);
+    }
+    return;
   }
 
-  // duyệt từng cửa: giống logic click để đảm bảo "đặt cược thật"
-  // (mã click hiện tại đang: tăng bets[name], trừ balance, update UI, saveBets) 
-  // Tham chiếu cách trừ xu + cập nhật hiển thị trong code gốc. :contentReference[oaicite:2]{index=2}
-  for (const [name,amtRaw] of Object.entries(AutoBet.tpl)) {
-    let amt = Math.max(0, Number(amtRaw)||0);
+  // 3) Đặt cược thật (đủ tiền cho toàn bộ template)
+  for (const [name, amtRaw] of Object.entries(AutoBet.tpl)) {
+    const amt = Math.max(0, Number(amtRaw)||0);
     if (amt === 0) continue;
-    if (typeof balance === "number" && balance < amt) continue; // không đủ thì bỏ qua cửa này
-
-    // tăng vào object bets
     if (!bets[name]) bets[name] = 0;
     bets[name] = Number(bets[name]) + amt;
-
-    // trừ xu thật
-    balance -= amt;
+    balance -= amt; // trừ xu thật
   }
 
-  // cập nhật UI đồng bộ (cả bet-box và “door”)
+  // 4) Cập nhật UI + lưu
   try {
-    // bet-box
     Object.keys(bets).forEach(n=>{
       const b = document.querySelector(`.bet-box[data-name="${n}"] .bet-amount`);
       if (b) b.textContent = Number(bets[n]||0);
     });
-    // door
     document.querySelectorAll(".door").forEach(door=>{
       const n = door.dataset.name;
       const betDisplay = door.querySelector(".bet-display");
@@ -7183,12 +7260,11 @@ function applyAutoBetOnce(){
     });
   } catch(e){}
 
-  // cập nhật số dư + tổng cược + lưu
   if (typeof updateBalanceDisplay === "function") updateBalanceDisplay();
   if (typeof updateBetDisplay === "function")   updateBetDisplay();
   if (typeof saveBets === "function")           saveBets();
 
-  // giảm số vòng còn lại (nếu có)
+  // 5) Giảm số vòng CHỈ KHI đã đặt thành công
   if (AutoBet.roundsLeft && AutoBet.roundsLeft > 0) {
     AutoBet.roundsLeft -= 1;
     if (AutoBet.roundsLeft <= 0) {
@@ -7199,7 +7275,54 @@ function applyAutoBetOnce(){
   }
 }
 
+</script>
 
+<script>
+// 1) Đồng bộ trạng thái nút theo AutoBet.enabled
+function setAutoBetButtonState(){
+  const btn = document.getElementById('openAutoBetBtn');
+  if (!btn) return;
+  btn.classList.toggle('is-on', !!AutoBet.enabled);
+
+  // Đổi label hiển thị
+  const label = btn.querySelector('.ab-launch__label');
+  if (label){
+    if (AutoBet.enabled){
+      const rounds = (AutoBet.roundsLeft ?? null);
+      label.textContent = rounds ? `Auto Bet • ON (${rounds})` : 'Auto Bet • ON';
+    } else {
+      label.textContent = 'Auto Bet';
+    }
+  }
+}
+
+// 2) Gắn ripple khi bấm
+document.getElementById('openAutoBetBtn')?.addEventListener('click', function(e){
+  const r = this.getBoundingClientRect();
+  const x = e.clientX - r.left, y = e.clientY - r.top;
+  const ripple = document.createElement('span');
+  ripple.className = 'ab-ripple';
+  ripple.style.left = x + 'px';
+  ripple.style.top  = y + 'px';
+  this.appendChild(ripple);
+  setTimeout(()=> ripple.remove(), 450);
+});
+
+// 3) Gọi hàm này ở các điểm thay đổi trạng thái
+//    - ngay sau open/close modal sync
+const _syncABToUI = (typeof syncABToUI === 'function') ? syncABToUI : null;
+window.syncABToUI = function(){
+  if (_syncABToUI) _syncABToUI(); // giữ nguyên logic cũ của bạn
+  setAutoBetButtonState();        // cập nhật nút đẹp
+};
+
+//    - sau Start/Stop/Save (nếu bạn có listener riêng thì chỉ cần đảm bảo gọi syncABToUI())
+document.getElementById("ab-start")?.addEventListener("click", ()=> setTimeout(setAutoBetButtonState, 0));
+document.getElementById("ab-stop") ?.addEventListener("click", ()=> setTimeout(setAutoBetButtonState, 0));
+document.getElementById("ab-save") ?.addEventListener("click", ()=> setTimeout(setAutoBetButtonState, 0));
+
+// 4) Khởi tạo trạng thái khi load
+document.addEventListener('DOMContentLoaded', setAutoBetButtonState);
 </script>
 
 
