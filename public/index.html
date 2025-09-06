@@ -3536,6 +3536,7 @@ h1 {
 }
 
 
+
  </style>
 </head>
 <body>
@@ -3604,9 +3605,9 @@ h1 {
  <div class="led-frame"></div>
 <!-- Brand Logo -->
 <a class="brand-logo" href="#" aria-label="Greedy Casino Home">
-  <span class="brand-greedy">Greedy</span>
-  <span class="brand-dice" aria-hidden="true">🎲</span>
-  <span class="brand-casino">Casino</span>
+  <span class="brand-greedy">Greedy King</span>
+  <span class="brand-dice" aria-hidden="true">🥗</span>
+  <span class="brand-casino">VIP GAME</span>
 </a>
  <div class="left-panel">
 <!--
@@ -3759,31 +3760,22 @@ h1 {
 </div>
 
 
+
+
+
 <div class="right-panel">
-
 <div class="time-display">
-<h1>💎JACKPOT💎</h1> 
-BIG WIN 1.000.000 COIN 
-
-<!--
-
--->
-<div class="wallet wallet--digital">
-<div class="wallet-display">
-<div class="jackpot-box">
-<div class="jackpot-icon">🎰</div>
+<h1 class="brand-dice" aria-hidden="true">🎰JACKPOT🎰</h1> 
+<h2 class="brand-dice" aria-hidden="true">BIG WIN 1.000.000 COIN </h2>
+<div class="brand-greedy">  </div>
 <div class="jackpot-info">
-<div class="jackpot-label">Jackpot</div>
+<div class="brand-casino">  </div>
  <div class="led-panel">
 <div class="jackpot-value"><span id="jackpot">0</span></div>
   </div>
 <progress id="jackpotProgress" max="1000000" value="0"></progress>
 </div>
 </div>
-</div>
-</div>
-</div>
-
 
 
 <button id="openAutoBetBtn" class="ab-launch" type="button">
@@ -3791,63 +3783,6 @@ BIG WIN 1.000.000 COIN
   <span class="ab-launch__label">Auto Bet</span>
   <span class="ab-launch__led" aria-hidden="true"></span>
 </button>
-
-
-<!-- Modal Auto Bet -->
-<div id="autoBetModal" class="historyBetModal" style="display:none;">
-  <div class="modal-box ab-modal">
-    <div class="ab-header" id="abDragHandle">
-      <div class="ab-title">
-        <span class="ab-icon">⚙️</span>
-        <span>Đặt cược tự động / Cấu hình</span>
-        <span class="ab-badge">VIP</span>
-      </div>
-      <button id="closeAutoBet" class="ab-btn ab-btn-ghost" aria-label="Đóng">✕</button>
-    </div>
-
-    <div class="ab-subtitle">Đặt cược tự động khi <b>đồng hồ = 20s</b> trước mỗi phiên.</div>
-
-    <!-- Card: 8 cửa -->
-    <div class="ab-card">
-      <div class="ab-card-title">Nhập xu cược</div>
-      <div class="ab-grid">
-        <label class="ab-field">🍅<input type="number" min="0" id="ab-Chua" class="ab-input" placeholder="0"></label>
-        <label class="ab-field">🥦<input type="number" min="0" id="ab-Cải"  class="ab-input" placeholder="0"></label>
-        <label class="ab-field">🌽<input type="number" min="0" id="ab-Ngô"  class="ab-input" placeholder="0"></label>
-        <label class="ab-field">🥕<input type="number" min="0" id="ab-Rốt"  class="ab-input" placeholder="0"></label>
-        <label class="ab-field">🌭<input type="number" min="0" id="ab-Mỳ"   class="ab-input" placeholder="0"></label>
-        <label class="ab-field">🍢<input type="number" min="0" id="ab-Xiên" class="ab-input" placeholder="0"></label>
-        <label class="ab-field">🍖<input type="number" min="0" id="ab-Đùi"  class="ab-input" placeholder="0"></label>
-        <label class="ab-field">🥩<input type="number" min="0" id="ab-Bò"   class="ab-input" placeholder="0"></label>
-      </div>
-    </div>
-
-    <div class="ab-row">
-      <label class="ab-field" style="flex:1;">Số vòng lặp
-        <input type="number" min="1" id="ab-rounds" class="ab-input" placeholder="Để trống = vô hạn">
-      </label>
-
-      <label class="ab-switch">
-        <input type="checkbox" id="ab-enabled">
-        <span class="ab-switch-slider"></span>
-        <span class="ab-switch-label">Bật tự động</span>
-      </label>
-    </div>
-
-    <div class="ab-actions">
-      <button id="ab-save"  class="ab-btn ab-btn-primary">💾 Lưu cấu hình</button>
-      <button id="ab-start" class="ab-btn ab-btn-success">▶️ Bắt đầu</button>
-      <button id="ab-stop"  class="ab-btn ab-btn-danger">⏹️ Dừng</button>
-      <button id="ab-reset" class="ab-btn ab-btn-ghost">↺ Reset cược</button>
-
-    </div>
-
-    <div id="ab-note" class="ab-note">Đang tắt. Nhấn “Bắt đầu” để bật.</div>
-
-    <!-- scanline & glow -->
-    <div class="ab-scanline"></div>
-  </div>
-</div>
 
 <!-- Nút mở lịch sử -->
 <button id="openHistoryBtn"  class="ab-launch">📜 Lịch sử cược</button>
@@ -3881,17 +3816,18 @@ BIG WIN 1.000.000 COIN
 <div class="user-name">👤 Tên: <span id="userNameDisplay"></span></div>
 <div class="user-id">🆔: <span id="userIdDisplay"></span></div>
 <button id="changeNameBtn" class="avatar-btn">✏️ Đổi tên</button>
+
 </div>
 </div>
-<br>
+<br><br><br><br><br><br><br>
 </div>
 <div class="ab-launch" id="notification"></div>
-<br><br><br><br>
+<br><br><br><br><br><br><br>
 
 <div>
-<h4 class="time-display" >🥗 GREEDY KING 🥗</h4>
+<h4 class="brand-greedy" >🥗 GREEDY KING 🥗</h4>
 </div>
-<br><br>
+<br><br><br><br><br><br><br>
 </div>
 
 
@@ -4195,6 +4131,60 @@ background: rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index
       </button>
     </div>
   </div>
+</div>
+</div>
+
+
+<!-- Modal Auto Bet -->
+<div id="autoBetModal" class="historyBetModal" style="display:none;">
+<div class="modal-box ab-modal">
+<div class="ab-header" id="abDragHandle">
+<div class="ab-title">
+<span class="ab-icon">⚙️</span>
+<span>Đặt cược tự động / Cấu hình</span>
+<span class="ab-badge">VIP</span>
+</div>
+<button id="closeAutoBet" class="ab-btn ab-btn-ghost" aria-label="Đóng">✕</button>
+</div>
+<div class="ab-subtitle">Đặt cược tự động khi <b>đồng hồ = 20s</b> trước mỗi phiên.</div>
+
+    <!-- Card: 8 cửa -->
+    <div class="ab-card">
+      <div class="ab-card-title">Nhập xu cược</div>
+      <div class="ab-grid">
+        <label class="ab-field">🍅<input type="number" min="0" id="ab-Chua" class="ab-input" placeholder="0"></label>
+        <label class="ab-field">🥦<input type="number" min="0" id="ab-Cải"  class="ab-input" placeholder="0"></label>
+        <label class="ab-field">🌽<input type="number" min="0" id="ab-Ngô"  class="ab-input" placeholder="0"></label>
+        <label class="ab-field">🥕<input type="number" min="0" id="ab-Rốt"  class="ab-input" placeholder="0"></label>
+        <label class="ab-field">🌭<input type="number" min="0" id="ab-Mỳ"   class="ab-input" placeholder="0"></label>
+        <label class="ab-field">🍢<input type="number" min="0" id="ab-Xiên" class="ab-input" placeholder="0"></label>
+        <label class="ab-field">🍖<input type="number" min="0" id="ab-Đùi"  class="ab-input" placeholder="0"></label>
+        <label class="ab-field">🥩<input type="number" min="0" id="ab-Bò"   class="ab-input" placeholder="0"></label>
+      </div>
+    </div>
+
+<div class="ab-row">
+<label class="ab-field" style="flex:1;">Số vòng lặp
+<input type="number" min="1" id="ab-rounds" class="ab-input" placeholder="Để trống = vô hạn">
+</label>
+<label class="ab-switch">
+<input type="checkbox" id="ab-enabled">
+<span class="ab-switch-slider"></span>
+<span class="ab-switch-label">Bật tự động</span>
+</label>
+</div>
+
+<div class="ab-actions">
+<button id="ab-save"  class="ab-btn ab-btn-primary">💾 Lưu cấu hình</button>
+<button id="ab-start" class="ab-btn ab-btn-success">▶️ Bắt đầu</button>
+<button id="ab-stop"  class="ab-btn ab-btn-danger">⏹️ Dừng</button>
+<button id="ab-reset" class="ab-btn ab-btn-ghost">↺ Reset cược</button>
+</div>
+
+<div id="ab-note" class="ab-note">Đang tắt. Nhấn “Bắt đầu” để bật.</div>
+
+<!-- scanline & glow -->
+<div class="ab-scanline"></div>
 </div>
 </div>
 
