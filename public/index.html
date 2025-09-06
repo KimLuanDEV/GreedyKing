@@ -3536,6 +3536,231 @@ h1 {
 }
 
 
+/* ===== Lux balance box (drop-in) ===== */
+.balance-box {
+  position: relative;
+  align-items: center;
+  gap: 35px;
+  padding: 20px 26px;
+  border-radius: 16px;
+  background: linear-gradient(160deg, #151515, #1f1f1f);
+  border: 1px solid rgba(255,255,255,.12);
+  box-shadow:
+    inset 0 0 14px rgba(255,255,255,.06),
+    0 10px 28px rgba(0,0,0,.45);
+}
+
+/* logo xu tròn kim loại */
+.balance-icon {
+  width: 44px; height: 44px; border-radius: 50%;
+  display: grid; place-items: center;
+  background:
+    radial-gradient(circle at 30% 30%, #fff, #cfd3da 55%, #9aa1ac 75%, #6b717d 100%);
+  box-shadow:
+    inset 0 2px 6px rgba(255,255,255,.35),
+    inset 0 -6px 12px rgba(0,0,0,.35),
+    0 0 12px rgba(255,215,0,.25);
+  border: 2px solid rgba(255,215,0,.35);
+  font-size: 1.2rem; color:#111;
+}
+
+/* nhãn và số */
+.balance-label {
+  font-size:.9rem; color:#a9b0b3;
+  letter-spacing:.2px;
+}
+.balance-value {
+  font: 900 1.7rem/1 "Digital-7 Mono", monospace; /* đã import sẵn */
+  color:#00ff95;
+  text-shadow: 0 0 8px #00ff95, 0 0 18px #00ffaa, 0 0 36px #00ffcc;
+}
+
+/* ánh sáng quét nhẹ */
+.balance-box::after{
+  content:"";
+  position:absolute; inset:0; border-radius:inherit;
+  background: linear-gradient(120deg, rgba(255,255,255,0) 0%,
+                                         rgba(255,255,255,.12) 50%,
+                                         rgba(255,255,255,0) 100%);
+  transform: translateX(-120%) skewX(-18deg);
+  animation: sweep 6s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes sweep{
+  0%{ transform: translateX(-120%) skewX(-18deg); }
+  55%,100%{ transform: translateX(120%) skewX(-18deg); }
+}
+
+/* nhấp nháy khi số dư cập nhật */
+.balance-value.balance-bounce{
+  animation: balancePop .5s ease;
+}
+@keyframes balancePop{
+  0%{ transform: scale(1); filter:brightness(1); }
+  50%{ transform: scale(1.08); filter:brightness(1.3); }
+  100%{ transform: scale(1); filter:brightness(1); }
+}
+
+/* gọn trên mobile */
+@media (max-width:600px){
+  .balance-box{ padding:12px 14px; }
+  .balance-value{ font-size:1.5rem; }
+  .balance-icon{ width:200px; height:200px; }
+}
+/* ========== HISTORY v2 (casino neon + glass) ========== */
+.history{
+  --bg:#0a0f1a;
+  --glass:rgba(10,15,26,.55);
+  --glass2:rgba(255,255,255,.06);
+  --neon:#32ffe6;
+  --gold:#ffd76a;
+  --danger:#ff5d6c;
+  --win:#00f5a4;
+  --lose:#ff6b6b;
+  --txt:#eef3ff;
+  --sub:#a6b0c8;
+  --radius:18px;
+
+  position:relative;
+  border-radius:var(--radius);
+  overflow:hidden;
+  color:var(--txt);
+  background: linear-gradient(180deg, rgba(17,26,40,.8), rgba(7,12,24,.6));
+  box-shadow:
+    0 20px 50px rgba(0,0,0,.55),
+    inset 0 0 0 1px rgba(255,255,255,.05);
+}
+
+/* viền ánh kim chạy */
+.history::before{
+  content:"";
+  position:absolute; inset:0; pointer-events:none;
+  padding:1.5px; border-radius:calc(var(--radius) + 6px);
+  background: conic-gradient(from 0deg, var(--neon), var(--gold), #9b59ff, var(--neon));
+  background-size:200% 200%;
+  animation: hxBorder 10s linear infinite;
+  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor; mask-composite:exclude;
+}
+@keyframes hxBorder{ 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+
+/* Header */
+.history__hdr{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:12px 14px;
+  background:
+    radial-gradient(1200px 40px at 0% 0%, rgba(50,255,230,.12), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+  border-bottom:1px solid var(--glass2);
+}
+.hdr-left{ display:flex; align-items:center; gap:10px }
+.hdr-led{
+  width:10px; height:10px; border-radius:999px;
+  background: #39ff14; box-shadow: 0 0 10px #39ff14, 0 0 22px rgba(57,255,20,.6);
+  animation: ledPulse 1.2s ease-in-out infinite;
+}
+@keyframes ledPulse{ 50%{ transform:scale(1.2); filter:brightness(1.6) } }
+.hdr-title{
+  font-weight:900; letter-spacing:.4px;
+  text-shadow:0 0 10px rgba(50,255,230,.35);
+}
+.hdr-spark{
+  margin-left:6px; color:var(--gold); text-shadow:0 0 10px rgba(255,215,106,.6);
+  animation:spark 2.2s ease-in-out infinite;
+}
+@keyframes spark{ 50%{ transform:translateY(-1px) scale(1.25) } }
+
+.hdr-actions{ display:flex; gap:8px }
+.hx-btn{
+  font:600 12px/1 system-ui; padding:8px 10px; border-radius:10px;
+  background:rgba(255,255,255,.06); color:var(--txt);
+  border:1px solid rgba(255,255,255,.12); cursor:pointer;
+  transition:.2s ease; backdrop-filter:blur(6px);
+}
+.hx-btn:hover{ transform:translateY(-1px); box-shadow:0 8px 18px rgba(0,0,0,.25) }
+.hx-btn.ghost{ background:transparent }
+.hx-btn.danger{ border-color:rgba(255,93,108,.45); color:#ffdfe2 }
+
+/* Toolbar: filters + stats */
+.history__toolbar{
+  display:flex; gap:16px; align-items:center; justify-content:space-between;
+  padding:10px 14px; border-bottom:1px solid var(--glass2);
+  background:rgba(255,255,255,.02);
+}
+.hx-seg{ display:flex; gap:6px; background:rgba(255,255,255,.04); padding:4px; border-radius:999px; }
+.seg-btn{
+  padding:6px 12px; border-radius:999px; border:1px solid transparent;
+  background:transparent; color:var(--txt); font-weight:700; letter-spacing:.2px; cursor:pointer;
+  transition:.2s;
+}
+.seg-btn.active{ background:linear-gradient(145deg, rgba(50,255,230,.18), rgba(50,255,230,.06)); border-color:rgba(50,255,230,.35) }
+.seg-btn:hover{ transform:translateY(-1px) }
+
+.hx-stats{ display:flex; gap:14px }
+.stat{ min-width:88px; padding:6px 10px; border-radius:12px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.06) }
+.stat-k{ font-size:11px; color:var(--sub); letter-spacing:.3px }
+.stat-v{ font-weight:900; margin-top:2px }
+.stat-v.pl{ color:var(--win) }
+
+/* List */
+.history__listwrap{ position:relative }
+.history__list{
+  max-height:260px; overflow:auto; padding:12px 12px 14px;
+  scrollbar-width: thin;
+}
+.history__list::-webkit-scrollbar{ width:8px }
+.history__list::-webkit-scrollbar-thumb{
+  background: linear-gradient(180deg, var(--neon), #8a7bff);
+  border-radius: 8px;
+}
+
+/* Empty state */
+.history__empty{
+  position:absolute; inset:0; display:none; align-items:center; justify-content:center;
+  flex-direction:column; gap:8px; color:var(--sub);
+}
+.empty-ico{ font-size:28px; opacity:.9 }
+
+/* Item card */
+.history__item{
+  --glow: rgba(50,255,230,.25);
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+  padding:12px 10px; margin-bottom:10px;
+  background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+  border:1px solid rgba(255,255,255,.06); border-radius:14px;
+  box-shadow:
+    inset 0 0 10px rgba(255,255,255,.03),
+    0 6px 20px rgba(0,0,0,.25);
+  transform: translateZ(0);
+  animation: slideIn .25s ease;
+}
+.history__item:hover{ box-shadow:0 10px 28px rgba(0,0,0,.35), 0 0 16px var(--glow) }
+@keyframes slideIn{ from{ opacity:0; transform:translateY(6px)} to{opacity:1; transform:none} }
+
+.item-left{ display:flex; align-items:center; gap:12px; min-width:0 }
+.item-ico{ font-size:1.1rem; filter: drop-shadow(0 0 6px rgba(255,255,255,.25)) }
+.item-main{ min-width:0 }
+.item-line{ font-weight:900; white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
+.item-sub{ font-size:.82rem; color:var(--sub) }
+
+.item-amount{ font-weight:1000; letter-spacing:.2px; white-space:nowrap }
+.history__item.win{ --glow: rgba(0,245,164,.3) }
+.history__item.win .item-amount{ color:var(--win); text-shadow:0 0 10px rgba(0,245,164,.35) }
+.history__item.lose{ --glow: rgba(255,107,107,.25) }
+.history__item.lose .item-amount{ color:var(--lose) }
+
+/* trạng thái flash */
+.history__item.flash{ animation: flash .6s ease }
+@keyframes flash{
+  0%{ filter:brightness(1.25) saturate(1.1); transform:scale(.98) }
+  60%{ filter:none; transform:scale(1.01) }
+  100%{ transform:none }
+}
+
+/* collapse */
+.history.collapsed .history__toolbar,
+.history.collapsed .history__listwrap{ display:none }
+.history.collapsed .hdr-actions .ghost{ transform:rotate(-90deg) }
 
  </style>
 </head>
@@ -3609,25 +3834,27 @@ h1 {
   <span class="brand-dice" aria-hidden="true">🥗</span>
   <span class="brand-casino">VIP GAME</span>
 </a>
+
+
+
  <div class="left-panel">
+
 <!--
 <br>
  <h1>🥗Greedy🥗</h1>
 -->
  
-
-<div class = result>
 <div class="time-display"> <span id="currentTime">--:--:--</span>
 <div id="spinCounter" class="sc-led sc-green"></div>
-</div>
-<br>
-<br>
-<div id="wheel-container">
-  <div id="wheel">
-</div>
+
 </div>
 
-<div id="handPointer" class="pointer-hand" style="display:none;">👆</div>
+<br>
+
+<div id="wheel-container">
+<div id="wheel">
+</div>
+</div>
 
 
 <div class="stage">
@@ -3646,10 +3873,7 @@ h1 {
     </div>
 
 
-
-
     <!-- Trục giữa-->
-
     <div class="hub">
     <div id="autoCountdown" style="margin-top:10px; font-weight:bold; color:#00ff95;"><span id="countdownValue"></span></div>
     </div>
@@ -3692,7 +3916,6 @@ h1 {
     </div>
   </div>
 
-<br>
  <div class="chip-selector">
   <div class="chip" data-value="1">1</div>
   <div class="chip" data-value="10">10</div>
@@ -3700,9 +3923,15 @@ h1 {
   <div class="chip" data-value="100">100</div>
   <div class="chip" data-value="1000">1000</div>
  </div>
- <div id="totalBetDisplay" style="margin-top: 10px; font-weight: bold;"></div>
 
-<div class="wallet wallet--digital">
+<button id="openAutoBetBtn" class="ab-launch" type="button">
+  <span class="ab-launch__icon">⚙️</span>
+  <span class="ab-launch__label">Auto Bet</span>
+  <span class="ab-launch__led" aria-hidden="true"></span>
+</button>
+
+<div id="totalBetDisplay" style ="display:none"></div>
+
 
 <div class="wallet-display">
 <div class="balance-box">
@@ -3720,9 +3949,10 @@ h1 {
 </div>
 </div>
 
+
 <div class="history" id="history"><b>Result</b><br></div>
 
-<div class="stats-box" id="stats">
+<div class="balance-box" id="stats">
 <div class="stat-item">
 <span class="stat-icon">📈</span>
 <span class="stat-label">Lãi:</span>
@@ -3736,6 +3966,7 @@ h1 {
 </div>
 
 <!--
+
 <div class="jackpot-box">
 <div class="jackpot-icon">🎰</div>
 <div class="jackpot-info">
@@ -3750,39 +3981,37 @@ h1 {
 
 </div>
 
-
 <div class="result" id="result" style="display:none"></div>
 <div id="suggestion" style="font-weight:bold; color:#00ccff; margin:10px 0;">
 </div>
 </div>
-</div>
 
-</div>
+
+
+
+
 
 
 
 
 
 <div class="right-panel">
+
 <div class="time-display">
 <h1 class="brand-dice" aria-hidden="true">🎰JACKPOT🎰</h1> 
 <h2 class="brand-dice" aria-hidden="true">BIG WIN 1.000.000 COIN </h2>
 <div class="brand-greedy">  </div>
 <div class="jackpot-info">
 <div class="brand-casino">  </div>
- <div class="led-panel">
+<div class="led-panel">
 <div class="jackpot-value"><span id="jackpot">0</span></div>
-  </div>
+</div>
 <progress id="jackpotProgress" max="1000000" value="0"></progress>
 </div>
 </div>
 
 
-<button id="openAutoBetBtn" class="ab-launch" type="button">
-  <span class="ab-launch__icon">⚙️</span>
-  <span class="ab-launch__label">Auto Bet</span>
-  <span class="ab-launch__led" aria-hidden="true"></span>
-</button>
+
 
 <!-- Nút mở lịch sử -->
 <button id="openHistoryBtn"  class="ab-launch">📜 Lịch sử cược</button>
@@ -3822,12 +4051,12 @@ h1 {
 <br><br><br><br><br><br><br>
 </div>
 <div class="ab-launch" id="notification"></div>
-<br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br>
 
 <div>
 <h4 class="brand-greedy" >🥗 GREEDY KING 🥗</h4>
 </div>
-<br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br>
 </div>
 
 
