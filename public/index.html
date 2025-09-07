@@ -4459,6 +4459,35 @@ h1 {
   filter: drop-shadow(0 0 10px var(--glow));
 }
 
+.ui-neo-btn{
+  padding:8px 12px;border-radius:12px;border:1px solid #2dffb6;background:#0b1320;color:#eafff7;
+  box-shadow:0 0 12px rgba(45,255,182,.25);font-weight:600;letter-spacing:.3px;cursor:pointer
+}
+.ui-neo-btn:hover{box-shadow:0 0 16px rgba(45,255,182,.45)}
+
+
+#howToOverlay[hidden]{ display:none !important; }
+
+.howto-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:1100
+}
+.howto-modal{
+  width:min(820px,92vw);max-height:min(86vh,980px);overflow:auto;
+  background:linear-gradient(180deg,#0e1a2b,#0a1220);border:1px solid rgba(255,255,255,.12);
+  border-radius:18px;box-shadow:0 10px 40px rgba(0,0,0,.5),0 0 24px rgba(0,255,170,.18);
+  color:#e9fff8;padding:18px 18px 14px;position:relative
+}
+.howto-close{
+  position:absolute;top:8px;right:10px;width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.2);
+  background:#0c1626; color:#fff; font-size:20px; line-height:34px; cursor:pointer
+}
+.howto-modal h2{font-size:20px;margin:0 0 12px}
+.howto-content{display:flex;flex-direction:column;gap:14px}
+.howto-content h3{font-size:16px;margin:6px 0 6px;color:#bfffe8}
+.howto-list{margin:6px 0 0 18px}
+.howto-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:8px 0 0}
+.howto-grid div{background:rgba(255,255,255,.04);padding:8px;border-radius:10px;border:1px solid rgba(255,255,255,.08)}
+@media (max-width:520px){.howto-grid{grid-template-columns:1fr}}
 
  </style>
 </head>
@@ -4723,12 +4752,13 @@ h1 {
 </div>
 
 
-
+<!--  class="bh-btn"  -->
 
 <!-- Nút mở lịch sử -->
 <button id="openHistoryBtn"  class="bh-btn">📜 Lịch sử cược</button>
 <button id="openHistoryModal" class="bh-btn">📜 Lịch sử code</button>
 <button id="openTransferHistoryBtn" class="bh-btn">💸 Lịch sử chuyển xu</button>
+<button id="openHowToBtn" class="bh-btn">❓ Hướng dẫn</button>
 <button id="logoutBtn" class="bh-btn">🚪 Đăng xuất</button>
 
 
@@ -4750,18 +4780,18 @@ h1 {
 
 
 <!-- Thông tin người dùng -->
-<div class="bh-btn" id="userInfoBar">
+<div class="ui-neo-btn" id="userInfoBar">
 <img src="https://i.pravatar.cc/80" alt="Avatar" class="user-avatar">
 <input type="file" id="avatarUpload" accept="image/*" style="display:none;">
 <div class="user-details">
 <div class="user-name">👤 Tên: <span id="userNameDisplay"></span></div>
 <div class="user-id">🆔: <span id="userIdDisplay"></span></div>
-<button id="changeNameBtn" class="bh-btn">✏️ Đổi tên</button>
+<button id="changeNameBtn" class="ui-neo-btn">✏️ Đổi tên</button>
 </div>
 </div>
-<div class="bh-btn" id="notification"></div>
+<div class="ui-neo-btn" id="notification"></div>
 
-<br><br><br><br><br><br><br><br><br<br><br><br<br><br><br<br><br><br<br><br><br><br><br<br><br><br<br><br><br<br><br><br<br><br><br<br><br><br<br><br><br<br><br><br<br><br><br<br><br>
+<br><br><br><br><br><br><br><br><br<br><br><br<br><br><br<br><br><br<br><br><br><br><br<br><br><br<br><br><br<br><br><br<br><br><br<br><br><br<br><br><br<br><br>
 
 
 
@@ -4800,6 +4830,7 @@ background: rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index
 </div>
 </div>
 </div>
+
 
 
 
@@ -4842,6 +4873,8 @@ background: rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index
 <audio id="spinSound" src="spin.mp3"></audio>
 <audio id="winSound" src="win.mp3"></audio>
 <audio id="bigWinSound" src="bigwin.mp3"></audio>
+
+
 
 <!-- Modal thông tin nạp xu -->
 <div id="depositInfoModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
@@ -4936,6 +4969,74 @@ style="padding:8px 16px; background:red; color:#fff; border:none; border-radius:
 </div>
 </div>
 </div>
+
+
+       
+<!-- ===== MODAL HƯỚNG DẪN ===== -->
+  <div id="howToOverlay" class="howto-overlay" hidden>
+  <div class="howto-modal" role="dialog" aria-modal="true" aria-labelledby="howtoTitle">
+    <button class="howto-close" id="closeHowToBtn" aria-label="Đóng hướng dẫn">×</button>
+    <h2 id="howtoTitle">📘 Hướng dẫn chơi Greedy King</h2>
+
+    <div class="howto-content">
+
+    <section>
+    <h3>1) Mục tiêu</h3>
+    <p>Game được thiết kế chỉ nhằm mục đích giải trí. Bất kỳ phần thưởng hoặc vật phẩm nhận được đều không có giá trị quy đổi thành tiền mặt. Game và phần thưởng có thể được sửa đổi hoặc chấm dứt bất cứ lúc nào mà không cần thông báo trước.</p>
+    <li>Chọn số lượng xu , xong lựa chọn tiếp loại mà bạn thích có thể tham gia trò chơi.</li>
+    <li>Mỗi vòng có 30 giây để lựa chọn, sau khi hết thời gian sẽ mở thưởng.</li>
+    <li>Nếu như kết quả mở thưởng giống với loại mà bạn chọn thì bạn có thể nhận được phần thưởng bội số xu tương ứng.</li>
+    <li>Quỹ thưởng càng lớn, cơ hội xuất hiện Pizza hoặc Salad sẽ càng tăng lên.</li>
+    <li>Kết quả cuối cùng do hệ thống tự động chọn ngẫu nhiên.</li>
+    <li>Trò chơi này được cung cấp bởi SWAG SOFT LLP.</li>
+    </section>
+
+    <section>
+        <h3>2) Các cửa &amp; hệ số</h3>
+        <div class="howto-grid">
+          <div><b>🍅</b> ×<span data-mul="Chua">5</span></div>
+          <div><b>🥦</b> ×<span data-mul="Cải">5</span></div>
+          <div><b>🌽</b> ×<span data-mul="Ngô">5</span></div>
+          <div><b>🥕</b> ×<span data-mul="Rốt">5</span></div>
+          <div><b>🌭</b> ×<span data-mul="Mỳ">10</span></div>
+          <div><b>🍢</b> ×<span data-mul="Xiên">15</span></div>
+          <div><b>🍖</b> ×<span data-mul="Đùi">25</span></div>
+          <div><b>🥩</b> ×<span data-mul="Bò">45</span></div>
+        </div>
+    </section>
+
+      <section>
+        <h3>3) Sự kiện đặc biệt</h3>
+        <ul class="howto-list">
+          <li><b>🥗 Salad</b>: thay thế kết quả thường. <u>Cả 4 cửa rau</u> (🍅, 🥦, 🌽, 🥕) cùng thắng. Trả thưởng = tổng cược từng cửa rau × hệ số cửa đó).</li>
+          <li><b>🍕 Pizza</b>: thay thế kết quả thường. <u>Cả 4 cửa thịt</u> (🌭, 🍢, 🍖, 🥩) cùng thắng. Trả thưởng = tổng cược từng cửa thịt × hệ số cửa đó).</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>4) Auto Bet</h3>
+        <p>Mở “Tự động đặt cược”, nhập số liệu cho từng cửa, sau đó Bắt đầu. Vòng quay kết thúc sẽ tự tiến hành đặt cược vòng kế tiếp theo lựa chọn đã lưu.</p>
+      </section>
+
+      <section>
+        <h3>5) Great Party</h3>
+        <p>Hũ Party tăng sau mỗi vòng. Có tỉ lệ nổ hũ nhất định và trả thưởng = 80% tổng hũ, 20% còn lại sẽ được tích lũy vào hũ.</p>
+      </section>
+
+      <section>
+        <h3>6) Lịch sử</h3>
+        <ul class="howto-list">
+          <li><b>Lịch sử kết quả</b>: lưu chuỗi icon 🥗/🍕/... &amp; bảng chi tiết theo vòng.</li>
+          <li><b>Lịch sử cược</b>: lưu toàn bộ vé cược của mỗi vòng, hiển thị Thắng/Thua &amp; Trả thưởng.</li>
+          <li><b>Lịch sử code</b>: lưu toàn bộ lịch sử đổi code và tạo code của người chơi.</li>
+          <li><b>Lịch sử chuyển xu</b>: lưu toàn bộ lịch sử chuyển xu của người chơi</li>
+        </ul>
+      </section>
+
+    </div>
+  </div>
+</div>
+
 
 <!-- Modal thông tin rút xu -->
 <div id="withdrawInfoModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
@@ -5173,6 +5274,53 @@ background: rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index
 
 <script>
 
+
+// ===== HOW-TO MODAL WIRING =====
+const openHowToBtn = document.getElementById("openHowToBtn");
+const howToOverlay = document.getElementById("howToOverlay");
+const closeHowToBtn = document.getElementById("closeHowToBtn");
+
+// Mở modal
+function openHowTo(){
+  if (!howToOverlay) return;
+  // Đồng bộ hệ số từ MULTIPLIER vào modal (nếu có)
+  try {
+    if (typeof MULTIPLIER === "object" && MULTIPLIER) {
+      document.querySelectorAll("[data-mul]").forEach(span=>{
+        const name = span.getAttribute("data-mul");
+        const val = MULTIPLIER[name];
+        if (val != null) span.textContent = Number(val);
+      });
+    }
+  } catch(e){}
+  howToOverlay.hidden = false;
+}
+// Đóng modal
+function closeHowTo(){
+  if (!howToOverlay) return;
+  howToOverlay.hidden = true;
+}
+
+openHowToBtn?.addEventListener("click", openHowTo);
+closeHowToBtn?.addEventListener("click", closeHowTo);
+
+// click ra nền để đóng
+howToOverlay?.addEventListener("click", (e)=>{
+  if (e.target === howToOverlay) closeHowTo();
+});
+
+// ESC để đóng
+window.addEventListener("keydown", (e)=>{
+  if (e.key === "Escape" && !howToOverlay.hidden) closeHowTo();
+});
+
+// Phím tắt Alt+H để mở/đóng
+window.addEventListener("keydown", (e)=>{
+  if (e.altKey && e.key.toLowerCase() === "h") {
+    if (howToOverlay.hidden) openHowTo(); else closeHowTo();
+    e.preventDefault();
+  }
+});
 
 // Tự gắn skin digital + theme theo name/type có sẵn
 const TYPE_OF = {
@@ -6116,35 +6264,245 @@ try {
 (function seedBotWinnersForThisSpin(selectedName, isSalad=false){
   const iconMap = { "Chua":"🍅","Cải":"🥬","Ngô":"🌽","Rốt":"🥕","Mỳ":"🌭","Xiên":"🍢","Đùi":"🍖","Bò":"🥩" };
   const bots = [
-    { name: "Tâm Tâm", avatar: "https://i.pravatar.cc/80?u=minh" },
-    { name: "Híp Híp",  avatar: "https://i.pravatar.cc/80?u=lan"  },
-    { name: "Vờ bờ",  avatar: "https://i.pravatar.cc/80?u=hai"  },
-    { name: "Baby",   avatar: "https://i.pravatar.cc/80?u=vu"   },
-    { name: "Vỡ nợ vì salad",   avatar: "https://i.pravatar.cc/80?u=ruoc"   },
-    { name: "Kún Yêu",   avatar: "https://i.pravatar.cc/80?u=keodeo"   },
-    { name: "3 rau bỏ idol",   avatar: "https://i.pravatar.cc/80?u=banhquy"   },
-    { name: "Mèo Tộc",   avatar: "https://i.pravatar.cc/80?u=socola"   },
-    { name: "Sói Bạc",   avatar: "https://i.pravatar.cc/80?u=nuoc"   },
-    { name: "Bán máu trả nợ",   avatar: "https://i.pravatar.cc/80?u=ban"   },
-    { name: "Masid",   avatar: "https://i.pravatar.cc/80?u=tulanh"   },
-    { name: "Mèo Mun",   avatar: "https://i.pravatar.cc/80?u=lo"   },
-    { name: "Minh Thư",   avatar: "https://i.pravatar.cc/80?u=bep"   },
-    { name: "Súp bào ngư",   avatar: "https://i.pravatar.cc/80?u=quat"   },
-    { name: "Thần long",   avatar: "https://i.pravatar.cc/80?u=dieuhoa"   },
-    { name: "Vũ Hạo",   avatar: "https://i.pravatar.cc/80?u=maygiat"   },
-    { name: "Gia Cát Dự",   avatar: "https://i.pravatar.cc/80?u=tivi"   },
-    { name: "Tiểu Bá Hổ",   avatar: "https://i.pravatar.cc/80?u=giuong"   },
-    { name: "Shark Tank",   avatar: "https://i.pravatar.cc/80?u=tu"   },
-    { name: "Bình Minh",   avatar: "https://i.pravatar.cc/80?u=chuot"   },
+    { name: "Tâm Tâm", avatar: "https://i.pravatar.cc/80?u=minhs" },
+    { name: "Híp Híp",  avatar: "https://i.pravatar.cc/80?u=ladn"  },
+    { name: "Vờ bờ",  avatar: "https://i.pravatar.cc/80?u=hqai"  },
+    { name: "Baby",   avatar: "https://i.pravatar.cc/80?u=vưu"   },
+    { name: "Vỡ nợ vì salad",   avatar: "https://i.pravatar.cc/80?u=reuoc"   },
+    { name: "Kún Yêu",   avatar: "https://i.pravatar.cc/80?u=keordeo"   },
+    { name: "3 rau bỏ idol",   avatar: "https://i.pravatar.cc/80?u=banthquy"   },
+    { name: "Mèo Tộc",   avatar: "https://i.pravatar.cc/80?u=socyola"   },
+    { name: "Sói Bạc",   avatar: "https://i.pravatar.cc/80?u=nuuoc"   },
+    { name: "Bán máu trả nợ",   avatar: "https://i.pravatar.cc/80?u=bian"   },
+    { name: "Masid",   avatar: "https://i.pravatar.cc/80?u=tulaonh"   },
+    { name: "Mèo Mun",   avatar: "https://i.pravatar.cc/80?u=lpo"   },
+    { name: "Minh Thư",   avatar: "https://i.pravatar.cc/80?u=bepơ"   },
+    { name: "Súp bào ngư",   avatar: "https://i.pravatar.cc/80?u=quưat"   },
+    { name: "Thần long",   avatar: "https://i.pravatar.cc/80?u=dieuahoa"   },
+    { name: "Vũ Hạo",   avatar: "https://i.pravatar.cc/80?u=maygisat"   },
+    { name: "Gia Cát Dự",   avatar: "https://i.pravatar.cc/80?u=tisvi"   },
+    { name: "Tiểu Bá Hổ",   avatar: "https://i.pravatar.cc/80?u=giudong"   },
+    { name: "Shark Tank",   avatar: "https://i.pravatar.cc/80?u=tfu"   },
+    { name: "Bình Minh",   avatar: "https://i.pravatar.cc/80?u=chugot"   },
     { name: "@@",   avatar: "https://i.pravatar.cc/80?u=dua"   },
-    { name: "Lên top",   avatar: "https://i.pravatar.cc/80?u=xoai"   },
-    { name: "Bánh bèo",   avatar: "https://i.pravatar.cc/80?u=chom"   },
-    { name: "Bún Riêu Cua",   avatar: "https://i.pravatar.cc/80?u=vai"   },
-    { name: "Bạch thủ đùi",   avatar: "https://i.pravatar.cc/80?u=nho"   },
-    { name: "Nuôi Mỳ top 1",   avatar: "https://i.pravatar.cc/80?u=cam"   },
-    { name: "Bạch Thủ Rau",   avatar: "https://i.pravatar.cc/80?u=quyt"   },
-    { name: "Phong Vũ",   avatar: "https://i.pravatar.cc/80?u=le"   },
-    { name: "Táo mèo",   avatar: "https://i.pravatar.cc/80?u=tao"   },
+    { name: "Lên top",   avatar: "https://i.pravatar.cc/80?u=xohai"   },
+    { name: "Bánh bèo",   avatar: "https://i.pravatar.cc/80?u=chojm"   },
+    { name: "Bún Riêu Cua",   avatar: "https://i.pravatar.cc/80?u=vkai"   },
+    { name: "Bạch thủ đùi",   avatar: "https://i.pravatar.cc/80?u=nhlo"   },
+    { name: "Nuôi Mỳ top 1",   avatar: "https://i.pravatar.cc/80?u=ca;m"   },
+    { name: "Bạch Thủ Rau",   avatar: "https://i.pravatar.cc/80?u=qu'yt"   },
+    { name: "Phong Vũ",   avatar: "https://i.pravatar.cc/80?u=lze"   },
+    { name: "Táo mèo",   avatar: "https://i.pravatar.cc/80?u=taxo"   },
+
+    { name: "Tâm Tâm", avatar: "https://i.pravatar.cc/80?u=micnh" },
+    { name: "Chiến KAKA",  avatar: "https://i.pravatar.cc/80?u=lvan"  },
+    { name: "Acacia",  avatar: "https://i.pravatar.cc/80?u=habi"  },
+    { name: "Adela",   avatar: "https://i.pravatar.cc/80?u=vnu"   },
+    { name: "Adelaide",   avatar: "https://i.pravatar.cc/80?u=rumoc"   },
+    { name: "Agatha",   avatar: "https://i.pravatar.cc/80?u=keod,eo"   },
+    { name: "Agnes",   avatar: "https://i.pravatar.cc/80?u=banhq.uy"   },
+    { name: "Alethea",   avatar: "https://i.pravatar.cc/80?u=soco/la"   },
+    { name: "Alida",   avatar: "https://i.pravatar.cc/80?u=nuqưoc"   },
+    { name: "Aliyah",   avatar: "https://i.pravatar.cc/80?u=baqen"   },
+    { name: "Alma",   avatar: "https://i.pravatar.cc/80?u=tulanqrh"   },
+    { name: "Almira",   avatar: "https://i.pravatar.cc/80?u=lqtro"   },
+    { name: "Alula",   avatar: "https://i.pravatar.cc/80?u=bepqy"   },
+    { name: "Alva",   avatar: "https://i.pravatar.cc/80?u=quaqut"   },
+    { name: "Amanda",   avatar: "https://i.pravatar.cc/80?u=diqieuhoa"   },
+    { name: "Amelinda",   avatar: "https://i.pravatar.cc/80?u=maygqoiat"   },
+    { name: "Amity",   avatar: "https://i.pravatar.cc/80?u=tiqpvi"   },
+    { name: "Angela",   avatar: "https://i.pravatar.cc/80?u=giqauong"   },
+    { name: "Annabella",   avatar: "https://i.pravatar.cc/80?u=tuqs"   },
+    { name: "Anthea",   avatar: "https://i.pravatar.cc/80?u=chuoqdt"   },
+    { name: "Aretha",   avatar: "https://i.pravatar.cc/80?u=duqfa"   },
+    { name: "Arianne",   avatar: "https://i.pravatar.cc/80?u=xoaqgi"   },
+    { name: "Artemis",   avatar: "https://i.pravatar.cc/80?u=choqhm"   },
+    { name: "Aubrey",   avatar: "https://i.pravatar.cc/80?u=vqjai"   },
+    { name: "Audrey",   avatar: "https://i.pravatar.cc/80?u=nhqko"   },
+    { name: "Aurelia",   avatar: "https://i.pravatar.cc/80?u=caqlm"   },
+    { name: "Aurora",   avatar: "https://i.pravatar.cc/80?u=quqzyt"   },
+    { name: "Azura",   avatar: "https://i.pravatar.cc/80?u=lqxe"   },
+    { name: "Bernice",   avatar: "https://i.pravatar.cc/80?u=tqcao"   },
+
+    { name: "Bertha", avatar: "https://i.pravatar.cc/80?u=miqvnh" },
+    { name: "Blanche",  avatar: "https://i.pravatar.cc/80?u=laqbn"  },
+    { name: "Brenna",  avatar: "https://i.pravatar.cc/80?u=haiqn"  },
+    { name: "Baby",   avatar: "https://i.pravatar.cc/80?u=vqmu"   },
+    { name: "Bridget",   avatar: "https://i.pravatar.cc/80?u=rweuoc"   },
+    { name: "Calantha",   avatar: "https://i.pravatar.cc/80?u=kewrodeo"   },
+    { name: "Calliope",   avatar: "https://i.pravatar.cc/80?u=banhwtquy"   },
+    { name: "Celina",   avatar: "https://i.pravatar.cc/80?u=socolwya"   },
+    { name: "Ceridwen",   avatar: "https://i.pravatar.cc/80?u=nuowyc"   },
+    { name: "Charmaine",   avatar: "https://i.pravatar.cc/80?u=bawun"   },
+    { name: "Christabel",   avatar: "https://i.pravatar.cc/80?u=tulwianh"   },
+    { name: "Ciara",   avatar: "https://i.pravatar.cc/80?u=lowo"   },
+    { name: "Cleopatra",   avatar: "https://i.pravatar.cc/80?u=bwpep"   },
+    { name: "Cosima",   avatar: "https://i.pravatar.cc/80?u=qwauat"   },
+    { name: "Daria",   avatar: "https://i.pravatar.cc/80?u=dieuwshoa"   },
+    { name: "Delwyn",   avatar: "https://i.pravatar.cc/80?u=maygiwdat"   },
+    { name: "Dilys",   avatar: "https://i.pravatar.cc/80?u=tivwfi"   },
+    { name: "Donna",   avatar: "https://i.pravatar.cc/80?u=giuowgng"   },
+    { name: "Doris",   avatar: "https://i.pravatar.cc/80?u=twhu"   },
+    { name: "Drusilla",   avatar: "https://i.pravatar.cc/80?u=cwjhuot"   },
+    { name: "Dulcie",   avatar: "https://i.pravatar.cc/80?u=duwka"   },
+    { name: "Edana",   avatar: "https://i.pravatar.cc/80?u=xoawli"   },
+    { name: "Edna",   avatar: "https://i.pravatar.cc/80?u=chowzm"   },
+    { name: "Eira",   avatar: "https://i.pravatar.cc/80?u=vawxi"   },
+    { name: "Eirlys",   avatar: "https://i.pravatar.cc/80?u=nhwco"   },
+    { name: "Elain",   avatar: "https://i.pravatar.cc/80?u=cawvm"   },
+    { name: "Elfleda",   avatar: "https://i.pravatar.cc/80?u=qwbuyt"   },
+    { name: "Elfreda",   avatar: "https://i.pravatar.cc/80?u=lwne"   },
+    { name: "Elysia",   avatar: "https://i.pravatar.cc/80?u=tawmo"   },
+
+    { name: "Erica", avatar: "https://i.pravatar.cc/80?u=miernh" },
+    { name: "Ermintrude",  avatar: "https://i.pravatar.cc/80?u=laetn"  },
+    { name: "Ernesta",  avatar: "https://i.pravatar.cc/80?u=haeyi"  },
+    { name: "Esperanza",   avatar: "https://i.pravatar.cc/80?u=veuu"   },
+    { name: "Eudora",   avatar: "https://i.pravatar.cc/80?u=ruoeic"   },
+    { name: "Eulalia",   avatar: "https://i.pravatar.cc/80?u=keodeoeo"   },
+    { name: "Eunice",   avatar: "https://i.pravatar.cc/80?u=banhqepuy"   },
+    { name: "Euphemia",   avatar: "https://i.pravatar.cc/80?u=soceaola"   },
+    { name: "Fallon",   avatar: "https://i.pravatar.cc/80?u=nuoesc"   },
+    { name: "Farah",   avatar: "https://i.pravatar.cc/80?u=baedn"   },
+    { name: "Felicity",   avatar: "https://i.pravatar.cc/80?u=tueflanh"   },
+    { name: "Fidelia",   avatar: "https://i.pravatar.cc/80?u=lego"   },
+    { name: "Fidelma",   avatar: "https://i.pravatar.cc/80?u=beehp"   },
+    { name: "Fiona",   avatar: "https://i.pravatar.cc/80?u=quejat"   },
+    { name: "Florence",   avatar: "https://i.pravatar.cc/80?u=diekeuhoa"   },
+    { name: "Genevieve",   avatar: "https://i.pravatar.cc/80?u=mayelgiat"   },
+    { name: "Gerda",   avatar: "https://i.pravatar.cc/80?u=tiezvi"   },
+    { name: "Giselle",   avatar: "https://i.pravatar.cc/80?u=giuexong"   },
+    { name: "Gladys",   avatar: "https://i.pravatar.cc/80?u=tecu"   },
+    { name: "Glenda",   avatar: "https://i.pravatar.cc/80?u=chuevot"   },
+    { name: "Godiva",   avatar: "https://i.pravatar.cc/80?u=dueba"   },
+    { name: "Grainne",   avatar: "https://i.pravatar.cc/80?u=xoenai"   },
+    { name: "Griselda",   avatar: "https://i.pravatar.cc/80?u=chemom"   },
+    { name: "Guinevere",   avatar: "https://i.pravatar.cc/80?u=vatyi"   },
+    { name: "Gwyneth",   avatar: "https://i.pravatar.cc/80?u=ntuho"   },
+    { name: "Halcyon",   avatar: "https://i.pravatar.cc/80?u=catim"   },
+    { name: "Hebe",   avatar: "https://i.pravatar.cc/80?u=qutoyt"   },
+    { name: "Helga",   avatar: "https://i.pravatar.cc/80?u=letp"   },
+    { name: "Heulwen",   avatar: "https://i.pravatar.cc/80?u=tatao"   },
+
+    { name: "Hypatia", avatar: "https://i.pravatar.cc/80?u=mitsnh" },
+    { name: "Imelda",  avatar: "https://i.pravatar.cc/80?u=latdn"  },
+    { name: "Iolanthe",  avatar: "https://i.pravatar.cc/80?u=hatfi"  },
+    { name: "Iphigenia",   avatar: "https://i.pravatar.cc/80?u=vtgu"   },
+    { name: "Isadora",   avatar: "https://i.pravatar.cc/80?u=ruothc"   },
+    { name: "Isolde",   avatar: "https://i.pravatar.cc/80?u=keotjdeo"   },
+    { name: "Jena",   avatar: "https://i.pravatar.cc/80?u=banhqtkuy"   },
+    { name: "Jezebel",   avatar: "https://i.pravatar.cc/80?u=sotlcola"   },
+    { name: "Jocasta",   avatar: "https://i.pravatar.cc/80?u=ntzuoc"   },
+    { name: "Jocelyn",   avatar: "https://i.pravatar.cc/80?u=batxn"   },
+    { name: "Joyce",   avatar: "https://i.pravatar.cc/80?u=tulatcnh"   },
+    { name: "Kaylin",   avatar: "https://i.pravatar.cc/80?u=ltvo"   },
+    { name: "Keelin",   avatar: "https://i.pravatar.cc/80?u=betbp"   },
+    { name: "Keisha",   avatar: "https://i.pravatar.cc/80?u=qutnat"   },
+    { name: "Kelsey",   avatar: "https://i.pravatar.cc/80?u=dieutmhoa"   },
+    { name: "Kerenza",   avatar: "https://i.pravatar.cc/80?u=maygyuiat"   },
+    { name: "Keva",   avatar: "https://i.pravatar.cc/80?u=tiyivi"   },
+    { name: "Kiera",   avatar: "https://i.pravatar.cc/80?u=giuyoong"   },
+    { name: "Ladonna",   avatar: "https://i.pravatar.cc/80?u=typu"   },
+    { name: "Laelia",   avatar: "https://i.pravatar.cc/80?u=chuauot"   },
+    { name: "Lani",   avatar: "https://i.pravatar.cc/80?u=duusa"   },
+    { name: "Latifah",   avatar: "https://i.pravatar.cc/80?u=xudoai"   },
+    { name: "Letitia",   avatar: "https://i.pravatar.cc/80?u=chufom"   },
+    { name: "Louisa",   avatar: "https://i.pravatar.cc/80?u=vaugi"   },
+    { name: "Lucasta",   avatar: "https://i.pravatar.cc/80?u=nuhho"   },
+    { name: "Lysandra",   avatar: "https://i.pravatar.cc/80?u=caujm"   },
+    { name: "Mabel",   avatar: "https://i.pravatar.cc/80?u=quyukt"   },
+    { name: "Maris",   avatar: "https://i.pravatar.cc/80?u=leul"   },
+    { name: "Martha",   avatar: "https://i.pravatar.cc/80?u=tauzo"   },
+
+    { name: "Meliora", avatar: "https://i.pravatar.cc/80?u=miuxnh" },
+    { name: "Meredith",  avatar: "https://i.pravatar.cc/80?u=lan"  },
+    { name: "Milcah",  avatar: "https://i.pravatar.cc/80?u=hauci"  },
+    { name: "Mildred",   avatar: "https://i.pravatar.cc/80?u=vuvu"   },
+    { name: "Mirabel",   avatar: "https://i.pravatar.cc/80?u=ruuboc"   },
+    { name: "Miranda",   avatar: "https://i.pravatar.cc/80?u=keoundeo"   },
+    { name: "Muriel",   avatar: "https://i.pravatar.cc/80?u=banumquy"   },
+    { name: "Myrna",   avatar: "https://i.pravatar.cc/80?u=socoiola"   },
+    { name: "Neala",   avatar: "https://i.pravatar.cc/80?u=nuoipc"   },
+    { name: "Olwen",   avatar: "https://i.pravatar.cc/80?u=baian"   },
+    { name: "Oralie",   avatar: "https://i.pravatar.cc/80?u=tuislanh"   },
+    { name: "Oriana",   avatar: "https://i.pravatar.cc/80?u=loid"   },
+    { name: "Orla",   avatar: "https://i.pravatar.cc/80?u=beifp"   },
+    { name: "Pandora",   avatar: "https://i.pravatar.cc/80?u=qiguat"   },
+    { name: "Phedra",   avatar: "https://i.pravatar.cc/80?u=dieihuhoa"   },
+    { name: "Philomena",   avatar: "https://i.pravatar.cc/80?u=maijygiat"   },
+    { name: "Phoebe",   avatar: "https://i.pravatar.cc/80?u=tiviki"   },
+    { name: "Rowan",   avatar: "https://i.pravatar.cc/80?u=giuilong"   },
+    { name: "Rowena",   avatar: "https://i.pravatar.cc/80?u=tuiz"   },
+    { name: "Selina",   avatar: "https://i.pravatar.cc/80?u=chixuot"   },
+    { name: "Sigourney",   avatar: "https://i.pravatar.cc/80?u=dicua"   },
+    { name: "Sigrid",   avatar: "https://i.pravatar.cc/80?u=xoaivi"   },
+    { name: "Sophronia",   avatar: "https://i.pravatar.cc/80?u=cibhom"   },
+    { name: "Stella",   avatar: "https://i.pravatar.cc/80?u=vain"   },
+    { name: "Thekla",   avatar: "https://i.pravatar.cc/80?u=nhimo"   },
+    { name: "Theodora",   avatar: "https://i.pravatar.cc/80?u=copam"   },
+    { name: "Tryphena",   avatar: "https://i.pravatar.cc/80?u=qoauyt"   },
+    { name: "Ula",   avatar: "https://i.pravatar.cc/80?u=leos"   },
+    { name: "Vera",   avatar: "https://i.pravatar.cc/80?u=taodo"   },
+
+    { name: "Verity", avatar: "https://i.pravatar.cc/80?u=minofh" },
+    { name: "Veronica",  avatar: "https://i.pravatar.cc/80?u=logan"  },
+    { name: "Winifred",  avatar: "https://i.pravatar.cc/80?u=haohi"  },
+    { name: "Xavia",   avatar: "https://i.pravatar.cc/80?u=voju"   },
+    { name: "Xenia",   avatar: "https://i.pravatar.cc/80?u=ruokoc"   },
+    { name: "Ethan",   avatar: "https://i.pravatar.cc/80?u=keolodeo"   },
+    { name: "Lucas",   avatar: "https://i.pravatar.cc/80?u=banhozquy"   },
+    { name: "Liam",   avatar: "https://i.pravatar.cc/80?u=socoxola"   },
+    { name: "Adam",   avatar: "https://i.pravatar.cc/80?u=nuoocc"   },
+    { name: "Aiden",   avatar: "https://i.pravatar.cc/80?u=bovan"   },
+    { name: "Ryan",   avatar: "https://i.pravatar.cc/80?u=tulaobnh"   },
+    { name: "Jayden",   avatar: "https://i.pravatar.cc/80?u=lono"   },
+    { name: "Kai",   avatar: "https://i.pravatar.cc/80?u=beomp"   },
+    { name: "Daniel",   avatar: "https://i.pravatar.cc/80?u=qupaat"   },
+    { name: "Nathan",   avatar: "https://i.pravatar.cc/80?u=diepsuhoa"   },
+    { name: "Aaron",   avatar: "https://i.pravatar.cc/80?u=maypdgiat"   },
+    { name: "Dylan",   avatar: "https://i.pravatar.cc/80?u=tipfvi"   },
+    { name: "Leo",   avatar: "https://i.pravatar.cc/80?u=giuopgng"   },
+    { name: "Zachary",   avatar: "https://i.pravatar.cc/80?u=tphu"   },
+    { name: "Matthew",   avatar: "https://i.pravatar.cc/80?u=chupjjot"   },
+    { name: "Benjamin",   avatar: "https://i.pravatar.cc/80?u=dupka"   },
+    { name: "Jaden",   avatar: "https://i.pravatar.cc/80?u=xoapli"   },
+    { name: "Samuel",   avatar: "https://i.pravatar.cc/80?u=chpzom"   },
+    { name: "Xavier",   avatar: "https://i.pravatar.cc/80?u=vapxi"   },
+    { name: "Joshua",   avatar: "https://i.pravatar.cc/80?u=npcho"   },
+    { name: "Isaac",   avatar: "https://i.pravatar.cc/80?u=campv"   },
+    { name: "Elijah",   avatar: "https://i.pravatar.cc/80?u=qpbuyt"   },
+    { name: "Caleb",   avatar: "https://i.pravatar.cc/80?u=lepn"   },
+    { name: "Michael",   avatar: "https://i.pravatar.cc/80?u=tpmao"   },
+
+    { name: "Alexander", avatar: "https://i.pravatar.cc/80?u=masinh" },
+    { name: "William",  avatar: "https://i.pravatar.cc/80?u=laadn"  },
+    { name: "Jake",  avatar: "https://i.pravatar.cc/80?u=hafai"  },
+    { name: "Andrew",   avatar: "https://i.pravatar.cc/80?u=vagu"   },
+    { name: "Oscar",   avatar: "https://i.pravatar.cc/80?u=ruahoc"   },
+    { name: "Nathaniel",   avatar: "https://i.pravatar.cc/80?u=keajodeo"   },
+    { name: "Julian",   avatar: "https://i.pravatar.cc/80?u=banhqakuy"   },
+    { name: "Adrian",   avatar: "https://i.pravatar.cc/80?u=socoalla"   },
+    { name: "Christian",   avatar: "https://i.pravatar.cc/80?u=nazuoc"   },
+    { name: "Jeremy",   avatar: "https://i.pravatar.cc/80?u=banax"   },
+    { name: "David",   avatar: "https://i.pravatar.cc/80?u=tulaacnh"   },
+    { name: "Harry",   avatar: "https://i.pravatar.cc/80?u=lavo"   },
+    { name: "Sean",   avatar: "https://i.pravatar.cc/80?u=beabp"   },
+    { name: "Felix",   avatar: "https://i.pravatar.cc/80?u=quanat"   },
+    { name: "Jasper",   avatar: "https://i.pravatar.cc/80?u=diameuhoa"   },
+    { name: "Oliver",   avatar: "https://i.pravatar.cc/80?u=maysdgiat"   },
+    { name: "Theo",   avatar: "https://i.pravatar.cc/80?u=tisfi"   },
+    { name: "Tyler",   avatar: "https://i.pravatar.cc/80?u=gisguong"   },
+    { name: "Kenneth",   avatar: "https://i.pravatar.cc/80?u=tush"   },
+    { name: "Hugo",   avatar: "https://i.pravatar.cc/80?u=chuosjt"   },
+    { name: "Martin",   avatar: "https://i.pravatar.cc/80?u=duska"   },
+    { name: "Joel",   avatar: "https://i.pravatar.cc/80?u=xoasli"   },
+    { name: "Steven",   avatar: "https://i.pravatar.cc/80?u=chszom"   },
+    { name: "Patrick",   avatar: "https://i.pravatar.cc/80?u=vsxai"   },
+    { name: "Simon",   avatar: "https://i.pravatar.cc/80?u=nhsco"   },
+    { name: "Louis",   avatar: "https://i.pravatar.cc/80?u=csvam"   },
+    { name: "Marcus",   avatar: "https://i.pravatar.cc/80?u=qusbyt"   },
+    { name: "Brandon",   avatar: "https://i.pravatar.cc/80?u=lsne"   },
+    { name: "Ivan",   avatar: "https://i.pravatar.cc/80?u=taosm"   },
   ];
   const MULT = isSalad ? 5 : (MULTIPLIER[selectedName] || 5);
 
@@ -7693,8 +8051,6 @@ const countdown = setInterval(() => {
     timeLeft--;
   }
 }, 1000);
-
-
 
 
 </script>
