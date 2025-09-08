@@ -5284,6 +5284,168 @@ h1 {
 
 
 
+/* ===== Wallet / Balance — Neon Aurora LED v2 ===== */
+:root{
+  --g1:#ffd54a; --g2:#49eaff; --g3:#b388ff;
+  --panel:#0d0f16; --glass:#12131a; --text:#f6f8ff; --dim:#aab0c6; --bdr:rgba(255,255,255,.12);
+}
+
+/* wrapper */
+.wallet-display{padding:8px;display:flex;justify-content:center;align-items:center}
+
+/* card */
+.balance-box{
+  position:relative;display:flex;align-items:center;gap:14px;
+  padding:14px 16px;border-radius:16px;color:var(--text);
+  background:linear-gradient(160deg,rgba(18,19,26,.92),rgba(10,12,18,.92));
+  border:1px solid transparent;background-clip:padding-box,border-box;
+  box-shadow:0 22px 50px rgba(0,0,0,.55), inset 0 0 0 100vmax rgba(255,255,255,.015);
+  overflow:hidden;
+}
+/* holographic border */
+.balance-box::before{
+  content:"";position:absolute;inset:0;border-radius:16px;padding:1px;pointer-events:none;
+  background:conic-gradient(from 150deg,var(--g1),var(--g2),var(--g3),var(--g1));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;opacity:.9;
+}
+/* aurora layer */
+.balance-box::after{
+  content:"";position:absolute;inset:-30%;background:
+   radial-gradient(60% 80% at 20% 20%, rgba(73,234,255,.12), transparent 60%),
+   radial-gradient(80% 60% at 80% 60%, rgba(255,213,74,.10), transparent 60%),
+   radial-gradient(70% 90% at 50% 100%, rgba(179,136,255,.10), transparent 70%);
+  filter:blur(10px);animation:auroraFlow 9s ease-in-out infinite alternate;pointer-events:none;
+}
+@keyframes auroraFlow{0%{transform:translateX(-2%) translateY(-1%)}100%{transform:translateX(2%) translateY(1%)}}
+
+/* coin icon with glow ring */
+.balance-icon{
+  position:relative;height:44px;width:44px;flex:0 0 44px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;font-size:1.15rem;
+  background:#0f1117;border:1px solid rgba(255,255,255,.18);z-index:1;
+  box-shadow:inset 0 0 10px rgba(255,255,255,.06);
+}
+.balance-icon::before{
+  content:"";position:absolute;inset:-6px;border-radius:16px;z-index:-1;
+  background:conic-gradient(from 0deg,rgba(73,234,255,.0),rgba(73,234,255,.35),rgba(255,213,74,.35),rgba(179,136,255,.35),rgba(73,234,255,.0));
+  filter:blur(10px);animation:ringSpin 6s linear infinite;
+}
+@keyframes ringSpin{to{transform:rotate(360deg)}}
+
+/* info block */
+.balance-info{display:flex;flex-direction:column;gap:6px;min-width:220px}
+.balance-label{font-size:.85rem;color:var(--dim);font-weight:800;letter-spacing:.25px}
+
+/* LED panel */
+.led-panel{
+  display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px;
+  background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(0,0,0,.22));
+  border:1px solid var(--bdr);border-radius:12px;padding:8px 10px;
+  box-shadow:inset 0 0 16px rgba(255,255,255,.05);
+}
+
+/* number LED (pseudo 7-seg look) */
+.led-number{
+  --led:#ffe27a;
+  font-variant-numeric:tabular-nums;letter-spacing:.6px;
+  font-weight:900;font-size:1.42rem;color:var(--led);
+  text-shadow:
+    0 0 6px rgba(255,226,122,.6),
+    0 0 18px rgba(255,226,122,.30),
+    0 0 2px rgba(255,226,122,.8);
+  background:
+    linear-gradient(transparent 65%, rgba(255,255,255,.08) 66%, transparent 67%) repeat-y 0 0/100% 10px; /* scanlines */
+  -webkit-text-stroke: .4px rgba(255,255,255,.18);
+}
+.balance-value{display:flex;align-items:baseline;gap:8px}
+
+/* arrow with tooltip + pulse */
+.arrow-icon{
+  height:24px;width:24px;padding:6px;border-radius:10px;cursor:pointer;
+  background:rgba(255,255,255,.05);border:1px solid var(--bdr);
+  transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+}
+.arrow-icon path{stroke:#e8edff}
+.arrow-icon:hover{
+  background:linear-gradient(145deg,rgba(255,213,74,.25),rgba(73,234,255,.20));
+  box-shadow:0 0 18px rgba(73,234,255,.35);transform:translateX(2px);
+}
+.arrow-icon:active{transform:translateX(1px) scale(.98)}
+.arrow-icon::after{
+  content:"Nạp xu";position:absolute;transform:translate(-50%,-140%);
+  left:50%;top:0;opacity:0;pointer-events:none;
+  background:rgba(0,0,0,.75);color:#fff;border:1px solid var(--bdr);
+  padding:4px 8px;border-radius:8px;font-size:.75rem;white-space:nowrap;
+  transition:opacity .15s ease, transform .15s ease;
+}
+.arrow-icon:hover::after{opacity:1;transform:translate(-50%,-160%)}
+
+/* pulse khi click */
+.arrow-icon.pulse{animation:pulse 0.5s ease}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(73,234,255,.45)}100%{box-shadow:0 0 0 16px rgba(73,234,255,0)}}
+
+/* silver theme (tuỳ chọn) */
+.wallet-display.silver .balance-box::before{background:conic-gradient(from 150deg,#cfd8dc,#90a4ae,#b0bec5,#cfd8dc)}
+.wallet-display.silver .led-number{--led:#e7eef3}
+
+
+
+
+/* ===== Balance Label — Neon Glass Badge ===== */
+.balance-label{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px 6px 36px;            /* chừa chỗ cho icon trái */
+  border-radius: 10px;
+  font-weight: 1200;
+  letter-spacing: .25px;
+  color: #f6f8ff;
+  background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.18));
+  border: 1px solid rgba(255,255,255,.12);
+  box-shadow: inset 0 0 10px rgba(255,255,255,.05);
+}
+
+/* icon xu ở bên trái (không cần thêm HTML) */
+.balance-label::before{
+  content: "💎";
+  position: absolute;
+  left: 8px; top: 50%;
+  transform: translateY(-50%);
+  height: 22px; width: 22px;
+  display: grid; place-items: center;
+  border-radius: 7px;
+  font-size: 13px;
+  background: #0f1117;
+  border: 1px solid rgba(255,255,255,.18);
+  box-shadow: 0 0 10px rgba(255,213,74,.25) inset;
+}
+
+/* gạch chân chuyển sắc */
+.balance-label::after{
+  content:"";
+  position: absolute;
+  left: 10px; right: 10px; bottom: -3px;
+  height: 2px; border-radius: 2px;
+  background: linear-gradient(90deg, #ffd54a, #49eaff);
+  filter: drop-shadow(0 0 6px rgba(73,234,255,.4));
+}
+
+/* nhấn nhá khi hover */
+.balance-label:hover{
+  box-shadow: 0 6px 20px rgba(73,234,255,.15), inset 0 0 12px rgba(255,255,255,.06);
+}
+
+/* phiên bản bạc–kim loại (tuỳ chọn) */
+.wallet-display.silver .balance-label::after{
+  background: linear-gradient(90deg, #cfd8dc, #90a4ae);
+}
+
+
+
+
  </style>
 </head>
 <body>
@@ -5454,18 +5616,17 @@ h1 {
   <span class="ab-launch__label">Auto Bet</span>
   <span class="ab-launch__led" aria-hidden="true"></span>
 </button>
-</div>
+
+
 
 </div>
 
-
+</div>
 
 <div id="totalBetDisplay" style ="display:none"></div>
-
-
 <div class="wallet-display">
 <div class="balance-box">
-<div class="balance-icon">💰</div>
+
 <div class="balance-info">
 <div class="balance-label">Số dư xu</div>
 <div class="led-panel">
@@ -5476,10 +5637,7 @@ h1 {
   <path d="M8 5l8 7-8 7" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
   </svg>
 </div>
-</div>
-</div>
 
-<div class="history" id="history"><b>Result</b><br></div>
 
 <div class="balance-box" id="stats">
 <div class="stat-item">
@@ -5493,6 +5651,16 @@ h1 {
 <span class="stat-value loss">0 xu</span>
 </div>
 </div>
+</div>
+
+
+</div>
+
+
+
+<div class="history" id="history"><b>Result</b><br></div>
+
+
 <br>
 <div>
 <h4 class="brand-greedy" >🥗 GREEDY KING 🥗</h4>
@@ -9891,6 +10059,38 @@ window.closeTransferModal = closeTransferModal;
 
 
 
+<script>
+const arrow = document.getElementById('openDepositArrow');
+if (arrow){
+  arrow.style.position = 'relative';
+  arrow.addEventListener('click', () => {
+    arrow.classList.remove('pulse'); void arrow.offsetWidth; arrow.classList.add('pulse');
+    // openDepositModal?.(); // gắn vào modal nạp nếu có
+  });
+}
+
+/* Cập nhật số dư mượt + flash màu khi tăng/giảm */
+function setBalanceSmooth(target){
+  const el = document.getElementById('balance');
+  if(!el) return;
+  const cur = Number(el.dataset.value || '0');
+  const to  = Math.max(0, Number(target)||0);
+  const steps = 18, diff = to - cur;
+  let i = 0;
+  const flash = diff >= 0 ? 'rgba(56,239,125,.25)' : 'rgba(255,92,122,.25)';
+  const tick = () => {
+    i++;
+    const v = Math.round(cur + diff * (i/steps));
+    el.textContent = v.toLocaleString('vi-VN');
+    el.dataset.value = v;
+    el.style.textShadow = `0 0 6px ${flash}, 0 0 18px rgba(255,226,122,.25)`;
+    if (i < steps) requestAnimationFrame(tick);
+    else setTimeout(()=>{ el.style.textShadow=''; },120);
+  };
+  tick();
+}
+// Ví dụ: setBalanceSmooth(256000);
+</script>
 
 
 
