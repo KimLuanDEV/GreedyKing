@@ -4,30 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Greedy</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <link href="https://fonts.cdnfonts.com/css/digital-7-mono" rel="stylesheet">
-
-<!-- Firebase (nếu bạn chưa nhúng) -->
-<script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore-compat.js"></script>
-<script>
- const firebaseConfig = {
-  apiKey: "AIzaSyAJPIwLBs37ktN8FzlF664mv0Y3fykvkUE",
-  authDomain: "greedy-531ca.firebaseapp.com",
-  databaseURL: "https://greedy-531ca-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "greedy-531ca",
-  storageBucket: "greedy-531ca.firebasestorage.app",
-  messagingSenderId: "1067992643519",
-  appId: "1:1067992643519:web:6d0ec2b6cfa7dd7217930a",
-  measurementId: "G-JVLQC9WS8Q"
-};
-
-  if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
-</script>
-
-
-
 </head>
 
  <style>
@@ -8701,8 +8677,8 @@ function showLogin() {
   window.addEventListener("load", () => {
   writeJackpot(readJackpot());
   if (localStorage.getItem("loggedIn") === "true") {
-  document.getElementById("loginOverlay").style.display = "none";
-  document.querySelector(".game-container").style.display = "flex";
+  document.getElementById("loginOverlay").style.display = "flex";
+  document.querySelector(".game-container").style.display = "none";
   }
 });
 
