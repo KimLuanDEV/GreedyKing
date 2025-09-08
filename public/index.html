@@ -5162,6 +5162,128 @@ h1 {
 
 
 
+/* ===== Transfer History – Mini Neon ===== */
+.txh{padding:10px 6px;font-family:Inter,system-ui,Segoe UI,Roboto,Arial}
+.txh-empty{opacity:.85;color:#aab0c6;text-align:center;padding:16px 0}
+
+.txh-day{position:sticky;top:0;z-index:1;margin:14px 0 8px}
+.txh-day__label{
+  display:inline-block;padding:6px 10px;border-radius:999px;font-weight:900;letter-spacing:.2px;
+  color:#0c0d10;background:linear-gradient(135deg,#ffd54a,#48eaff);
+  box-shadow:0 2px 12px rgba(72,234,255,.35), 0 0 0 1px rgba(255,255,255,.18) inset;
+}
+
+.txh-card{
+  position:relative;display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:center;
+  margin:10px 0;padding:12px;border-radius:16px;
+  background:linear-gradient(145deg,rgba(255,255,255,.03),rgba(0,0,0,.22));
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:inset 0 0 12px rgba(255,255,255,.05);
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+.txh-card:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(0,0,0,.35), inset 0 0 16px rgba(255,255,255,.06)}
+.txh-rail{position:absolute;left:22px;top:-10px;bottom:-10px;width:2px;background:linear-gradient(180deg,#ffd54a,transparent);opacity:.6}
+
+.txh-ico{
+  height:44px;width:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  border:1px solid rgba(255,255,255,.18);background:#0f1117;font-size:1.05rem;
+  box-shadow:inset 0 0 8px rgba(255,255,255,.06)
+}
+
+.txh-title{font-weight:900;color:#fff}
+.txh-meta{font-size:.9rem;color:#bfc3d6;display:flex;gap:10px;flex-wrap:wrap}
+.txh-amt{
+  font-weight:900;color:#ffd54a;text-shadow:0 0 6px rgba(255,215,0,.35);
+  padding:3px 8px;border-radius:999px;border:1px solid rgba(255,255,255,.16);
+  background:linear-gradient(145deg,rgba(255,213,74,.18),rgba(72,234,255,.12));
+}
+
+.txh-right{display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+.txh-pill{padding:3px 8px;border-radius:999px;border:1px solid;font-weight:800;font-size:.78rem}
+.txh-pill.out{color:#ffad3b;border-color:rgba(255,173,59,.5);background:rgba(255,173,59,.12)}
+.txh-pill.in{color:#38ef7d;border-color:rgba(56,239,125,.45);background:rgba(56,239,125,.12)}
+.txh-pill.failed{color:#ff5c7a;border-color:rgba(255,92,122,.5);background:rgba(255,92,122,.12)}
+
+.txh-mini{font-size:.84rem;color:#9ea5bf}
+@media (max-width:640px){ .txh-card{grid-template-columns:44px 1fr}.txh-right{align-items:flex-start} }
+
+
+
+
+/* ===== Transfer History – Neon Glass ===== */
+:root{
+  --gold:#ffd54a; --cyan:#48eaff; --text:#f6f8ff; --dim:#aab0c6; --border:rgba(255,255,255,.12);
+}
+.thx-modal{display:none;position:fixed;inset:0;z-index:7000;font-family:Inter,system-ui,Segoe UI,Roboto,Arial}
+.thx-modal.show{display:flex;align-items:center;justify-content:center;animation:thxIn .18s ease}
+@keyframes thxIn{from{opacity:0;transform:scale(.98)}to{opacity:1;transform:scale(1)}}
+.thx-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(2px)}
+
+.thx-box{
+  position:relative;width:min(720px,92vw);max-height:82vh;display:flex;flex-direction:column;overflow:hidden;
+  background:linear-gradient(160deg,rgba(18,19,26,.92),rgba(10,12,18,.92));
+  color:var(--text); border-radius:18px; border:1px solid transparent; background-clip:padding-box, border-box;
+  box-shadow:0 20px 50px rgba(0,0,0,.6), inset 0 0 0 100vmax rgba(255,255,255,.02);
+}
+.thx-box::before{
+  content:"";position:absolute;inset:0;border-radius:18px;padding:1px;pointer-events:none;
+  background:linear-gradient(135deg,var(--gold),var(--cyan));
+  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor; mask-composite:exclude; opacity:.85;
+}
+.thx-noise{position:absolute;inset:-20%;background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.02"/></svg>') repeat;mix-blend-mode:overlay;pointer-events:none}
+.thx-scan{position:absolute;inset:0;background:linear-gradient(180deg,transparent,rgba(255,255,255,.05),transparent);animation:thxScan 6s linear infinite;pointer-events:none}
+@keyframes thxScan{0%{transform:translateY(-100%)}100%{transform:translateY(100%)}}
+
+.thx-header,.thx-footer{
+  position:sticky;top:0;z-index:2;backdrop-filter:blur(6px);
+  background:linear-gradient(to bottom, rgba(255,213,74,.08), rgba(255,213,74,0));
+  border-bottom:1px solid rgba(255,213,74,.25); padding:12px 14px; display:flex; align-items:center; justify-content:space-between;
+}
+.thx-footer{top:auto;bottom:0;border-top:1px solid rgba(255,213,74,.22);border-bottom:none;justify-content:flex-end}
+.thx-header h3{margin:0;color:var(--gold);font-weight:900;letter-spacing:.2px;text-shadow:0 0 10px rgba(255,213,74,.45)}
+
+.thx-btn{border:none;border-radius:12px;padding:9px 12px;font-weight:800;cursor:pointer}
+.thx-btn--gold{background:linear-gradient(145deg,var(--gold),#ffb300);color:#1a1000;box-shadow:0 10px 22px rgba(255,213,74,.25)}
+.thx-btn--gold:hover{filter:brightness(1.06)}
+.thx-btn--ghost{background:rgba(255,255,255,.06);color:#fff;border:1px solid var(--border)}
+.thx-btn--ghost:hover{background:rgba(255,255,255,.12)}
+
+.thx-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:10px 14px}
+.thx-stat{background:linear-gradient(145deg,rgba(255,255,255,.03),rgba(0,0,0,.2));border:1px solid var(--border);border-radius:14px;padding:10px 12px}
+.thx-stat__label{font-size:.85rem;color:var(--dim)}
+.thx-stat__value{font-weight:900;color:var(--gold);text-shadow:0 0 8px rgba(255,215,0,.35)}
+
+.thx-list{padding:10px 14px 16px;overflow:auto}
+.thx-item{
+  display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:center;
+  margin:10px 0;padding:12px;border-radius:14px;
+  background:linear-gradient(145deg,rgba(255,255,255,.03),rgba(0,0,0,.22));
+  border:1px solid var(--border); box-shadow:inset 0 0 12px rgba(255,255,255,.05);
+}
+.thx-rail{position:absolute;left:22px;top:-10px;bottom:-10px;width:2px;background:linear-gradient(180deg,var(--gold),transparent);opacity:.55}
+.thx-ico{
+  height:44px;width:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  border:1px solid rgba(255,255,255,.18);background:#0f1117;font-size:1.05rem;box-shadow:inset 0 0 8px rgba(255,255,255,.06)
+}
+.thx-title{font-weight:900;color:#fff}
+.thx-meta{font-size:.9rem;color:#bfc3d6;display:flex;gap:10px;flex-wrap:wrap}
+.thx-amt{font-weight:900;color:var(--gold);text-shadow:0 0 6px rgba(255,215,0,.35);padding:3px 8px;border-radius:999px;border:1px solid var(--border);background:linear-gradient(145deg,rgba(255,213,74,.18),rgba(72,234,255,.12))}
+.thx-right{display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+.thx-pill{padding:3px 8px;border-radius:999px;border:1px solid;font-weight:800;font-size:.78rem}
+.thx-pill.out{color:#ffad3b;border-color:rgba(255,173,59,.5);background:rgba(255,173,59,.12)}
+.thx-pill.in{color:#38ef7d;border-color:rgba(56,239,125,.45);background:rgba(56,239,125,.12)}
+.thx-pill.failed{color:#ff5c7a;border-color:rgba(255,92,122,.5);background:rgba(255,92,122,.12)}
+
+@media (max-width:640px){
+  .thx-stats{grid-template-columns:1fr}
+  .thx-item{grid-template-columns:44px 1fr}
+  .thx-right{align-items:flex-start}
+}
+
+
+
+
  </style>
 </head>
 <body>
@@ -5425,6 +5547,7 @@ h1 {
 
 
 
+
  <form id="betForm" class="bet-section" style ="display:none">
   <div  class="bet-box" data-name="Chua"><span class="icon">🍅</span><span class="bet-amount">0</span><br><small>Win 5 times</small></div>  
   <div  class="bet-box" data-name="Cải"><span class="icon">🥦</span><span class="bet-amount">0</span><br><small>Win 5 times</small></div>  
@@ -5497,7 +5620,29 @@ style="max-height:300px; overflow-y:auto; background:#1d1d2c; padding:10px; bord
 </div>
 
 
-<!-- Modal lịch sử chuyển xu -->
+<!-- Modal lịch sử chuyển xu (Neon Glass) -->
+<div id="transferHistoryModal" class="thx-modal">
+  <div class="thx-backdrop" data-thx-close></div>
+
+  <div class="thx-box">
+    <div class="thx-header">
+      <h3>📜 Lịch sử chuyển xu</h3>
+      <button class="thx-btn thx-btn--ghost" id="closeTransferHistoryBtn" data-thx-close>✕</button>
+    </div>
+ 
+    <!-- danh sách -->
+    <div id="transferHistoryList" class="thx-list"></div>
+
+    <div class="thx-footer">
+     
+    </div>
+    <div class="thx-noise"></div>
+    <div class="thx-scan"></div>
+  </div>
+</div>
+
+
+<!-- Modal lịch sử chuyển xu 
 <div id="transferHistoryModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
 background: rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:7000;">
 <div class="modal-box" style="background:#111; color:#fff; padding:20px; border-radius:15px; 
@@ -5511,8 +5656,7 @@ style="max-height:300px; overflow-y:auto; background:#1d1d2c; padding:10px; bord
 </div>
 </div>
 </div>
-
-
+-->
 
 <!-- ===== MODAL HƯỚNG DẪN ===== -->
 <div id="howToOverlay" class="howto-overlay" hidden>
@@ -8693,22 +8837,99 @@ document.addEventListener("DOMContentLoaded", () => {
   const openHistoryBtn = document.getElementById("openTransferHistoryBtn");
   const closeHistoryBtn = document.getElementById("closeTransferHistoryBtn");
 
-// Hàm render lịch sử
-  function renderTransferHistory() {
-  let history = JSON.parse(localStorage.getItem("transferHistory")) || [];
-  if (history.length === 0) {
-  transferHistoryList.innerHTML = "<p style='color:gray'>Chưa có giao dịch nào</p>";
+
+
+function renderTransferHistory() {
+const box = document.getElementById("transferHistoryList") || window.transferHistoryList;
+if (!box) return;
+const raw = JSON.parse(localStorage.getItem("transferHistory")) || [];
+
+box.classList.add("txh");
+if (!raw.length) {
+  box.innerHTML = `<div class="txh-empty">🧾 Chưa có giao dịch nào</div>`;
   return;
   }
-  transferHistoryList.innerHTML = history.map(h => `
-  <div style="margin-bottom:8px; padding:6px; border-bottom:1px solid #444;">
-  <b>👤 Từ:</b> ${h.from} <br>
-  <b>➡️ Đến:</b> ${h.to} <br>
-  <b>💰 Số xu:</b> ${h.amount} <br>
-  <small>🕒 ${h.time}</small>
-  </div>
-  `).join("");
+
+// Chuẩn hoá + sort mới nhất trước
+  const data = raw.slice().map(x => ({...x, _ts: x.ts ?? Date.parse(x.time || 0)}))
+                   .sort((a,b)=>(isNaN(b._ts)?0:b._ts)-(isNaN(a._ts)?0:a._ts));
+
+  // Nhóm theo ngày
+  const groups = {};
+  for (const it of data) {
+  const d = isNaN(it._ts) ? new Date() : new Date(it._ts);
+  const key = [d.getFullYear(), d.getMonth()+1, d.getDate()].join("-");
+  (groups[key] ||= []).push(it);
   }
+
+  // Render
+  const html = Object.keys(groups).sort((a,b)=> (a<b?1:-1)).map(key=>{
+  const label = dayLabel(key);
+  const list = groups[key].map(renderItem).join("");
+  return `<div class="txh-day"><span class="txh-day__label">${label}</span></div>${list}`;
+  }).join("");
+
+  box.innerHTML = html;
+}
+
+function renderItem(h){
+  const from = esc(h.from ?? "Ẩn");
+  const to   = esc(h.to ?? "Ẩn");
+  const amt  = fmt(+h.amount || 0);
+  const time = h.time ? esc(h.time) : (!isNaN(h._ts) ? new Date(h._ts).toLocaleString("vi-VN") : "");
+  const note = h.note ? ` <span>•</span><span class="txh-mini">“${esc(h.note)}”</span>` : "";
+
+  // trạng thái (tuỳ chọn) + icon + dấu số
+  const st = (h.status || "Thành công").toLowerCase();
+  const icon = st==="in" ? "📥" : st==="failed" ? "⚠️" : "📤";
+  const pill = st==="in" ? "in" : st==="failed" ? "failed" : "out";
+  const sign = st==="in" ? "+" : st==="failed" ? "" : "−";
+
+  const idSafe = (h.id || "").replace(/[^a-zA-Z0-9_-]/g,"");
+  const idLine = h.id ? `<div class="txh-mini">Mã: <span id="tx-${idSafe}">${esc(h.id)}</span></div>` : "";
+
+  const title = st==="in" ? `Nhận từ ${from}` : (st==="failed" ? `Giao dịch thất bại` : `Chuyển đến ${to}`);
+
+  return `
+  <div class="txh-card">
+  <div class="txh-rail"></div>
+  <div class="txh-ico">${icon}</div>
+
+  <div>
+    <div class="txh-title">${title}</div>
+    <div class="txh-meta">
+    <span class="txh-amt">${sign}${amt} 💎</span>
+    ${time ? `<span>•</span><span>${time}</span>` : ""}
+    ${note}
+    </div>
+    ${idLine}
+  </div>
+
+    <div class="txh-right">
+    <span class="txh-pill ${pill}">${st.toUpperCase()}</span>
+    ${h.id ? `<button class="txh-pill" style="cursor:pointer" onclick="copyTx('#tx-${idSafe}')">Copy mã</button>` : ""}
+    </div>
+  </div>`;
+}
+
+
+/* ===== Helpers ===== */
+function fmt(n){ return (Math.round(n)||0).toLocaleString("vi-VN"); }
+function esc(s){ return String(s||"").replace(/[&<>"']/g, m=>({ "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;" }[m])); }
+function copyTx(sel){ const el=document.querySelector(sel); if(!el) return; navigator.clipboard.writeText(el.textContent.trim()); }
+
+function dayLabel(ymd){
+  const [Y,M,D] = ymd.split("-").map(Number);
+  const d=new Date(Y,M-1,D), today=strip(new Date());
+  const diff=Math.round((strip(d)-today)/(24*3600*1000));
+  if(diff===0) return "Hôm nay";
+  if(diff===-1) return "Hôm qua";
+  return `${String(D).padStart(2,"0")}/${String(M).padStart(2,"0")}`;
+}
+function strip(t){return new Date(t.getFullYear(),t.getMonth(),t.getDate());}
+
+
+
 
 // Mở modal lịch sử
   openHistoryBtn.addEventListener("click", function() {
@@ -9477,6 +9698,199 @@ function appendBetLog({container, time, spin, bets, totalBet, outcome, icon, pay
   container.insertAdjacentHTML('afterbegin', html);
 }
 </script>
+
+
+
+<script>
+// ===== Config nhanh =====
+const TX5_FEE_RATE = 0.01;          // 1% phí
+const TX5_MIN = 1;                  // tối thiểu 1 xu
+const TX5_MAX = 1_000_000_000;      // tuỳ bạn
+// đọc số dư người dùng (viết lại nếu có backend)
+function getUserBalance(){ return window.USER_BALANCE ?? 0; }
+function setUserBalance(v){ window.USER_BALANCE = v; }
+
+// ===== Mở/đóng modal =====
+function openTransferModal(prefill = { to:"", amount:0, note:"" }) {
+  const m = document.getElementById("transferModal");
+  if (!m) return;
+  m.classList.add("show"); m.setAttribute("aria-hidden","false");
+
+  // reset step
+  showStep(1);
+  // fill
+  qs("#tx5To").value = prefill.to || "";
+  qs("#tx5Amount").value = prefill.amount ? String(prefill.amount) : "";
+  qs("#tx5Note").value = prefill.note || "";
+
+  // set avatar
+  updateAvatar(qs("#tx5To").value);
+  // paint stats
+  paintStats();
+}
+function closeTransferModal(){
+  const m = document.getElementById("transferModal");
+  if (!m) return;
+  m.classList.remove("show"); m.setAttribute("aria-hidden","true");
+}
+// close handlers
+document.addEventListener("click", (e)=>{
+  if(e.target.matches("[data-close-tx]")) closeTransferModal();
+});
+
+// ===== DOM Helpers =====
+function qs(sel){ return document.querySelector(sel); }
+function qn(n){ const v = Number(String(n).replace(/[^\d]/g,"")); return Number.isFinite(v) ? v : 0; }
+function fmt(n){ return (Math.round(n)||0).toLocaleString("vi-VN"); }
+function esc(s){ return String(s||"").replace(/[&<>"']/g, m=>({ "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;" }[m])); }
+function initial(s){ s=String(s||"").trim(); return s? s[0].toUpperCase():"?"; }
+
+// ===== UI Actions =====
+function showStep(n){
+  qs("#tx5Step1").hidden = n!==1;
+  qs("#tx5Step2").hidden = n!==2;
+  qs("#tx5StepDone").hidden = n!==3;
+}
+function updateAvatar(name){
+  qs("#tx5Av b").textContent = initial(name);
+}
+function paintStats(){
+  const bal = getUserBalance();
+  const amt = qn(qs("#tx5Amount").value);
+  const fee = Math.floor(amt * TX5_FEE_RATE);
+  const after = bal - amt - fee;
+  qs("#tx5Bal").textContent = fmt(bal);
+  qs("#tx5Fee").textContent = fmt(fee);
+  qs("#tx5After").textContent = fmt(after);
+}
+function validateStep1(){
+  let ok = true;
+  const to = qs("#tx5To").value.trim();
+  const amt = qn(qs("#tx5Amount").value);
+  const bal = getUserBalance();
+
+  qs("#tx5ToErr").textContent = "";
+  qs("#tx5AmountErr").textContent = "";
+
+  if (to.length < 2) { qs("#tx5ToErr").textContent = "Tên/ID quá ngắn."; ok=false; }
+  if (amt < TX5_MIN) { qs("#tx5AmountErr").textContent = `Tối thiểu ${fmt(TX5_MIN)} xu.`; ok=false; }
+  if (amt > TX5_MAX) { qs("#tx5AmountErr").textContent = `Tối đa ${fmt(TX5_MAX)} xu.`; ok=false; }
+
+  const fee = Math.floor(amt * TX5_FEE_RATE);
+  if (amt + fee > bal){ qs("#tx5AmountErr").textContent = "Số dư không đủ."; ok=false; }
+
+  return ok;
+}
+function fillReview(){
+  const to = esc(qs("#tx5To").value.trim());
+  const amt = qn(qs("#tx5Amount").value);
+  const fee = Math.floor(amt * TX5_FEE_RATE);
+  const after = getUserBalance() - amt - fee;
+  const note = esc(qs("#tx5Note").value.trim()) || "—";
+
+  qs("#tx5RvTo").innerHTML = `<span class="tx5-av"><b>${initial(to)}</b></span> ${to}`;
+  qs("#tx5RvAmount").textContent = fmt(amt) + " xu";
+  qs("#tx5RvFee").textContent = fmt(fee) + " xu";
+  qs("#tx5RvAfter").textContent = fmt(after) + " xu";
+  qs("#tx5RvNote").textContent = note;
+}
+
+// ===== Events =====
+qs("#tx5To")?.addEventListener("input", e=> updateAvatar(e.target.value));
+qs("#tx5Amount")?.addEventListener("input", paintStats);
+document.querySelectorAll(".tx5-chip")?.forEach(b=>{
+  b.addEventListener("click", ()=>{
+    const inp = qs("#tx5Amount");
+    const bal = getUserBalance();
+    if (b.dataset.add){
+      const cur = qn(inp.value);
+      inp.value = String(cur + Number(b.dataset.add));
+    } else if (b.dataset.max){
+      // Max = số dư trừ 1% (xấp xỉ) → giải phương trình amt + 1%amt = bal
+      const maxAmt = Math.floor(bal / (1 + TX5_FEE_RATE));
+      inp.value = String(maxAmt);
+    }
+    paintStats();
+  });
+});
+
+// Step buttons
+qs("#tx5ReviewBtn")?.addEventListener("click", ()=>{
+  if (!validateStep1()) return;
+  fillReview();
+  showStep(2);
+});
+qs("#tx5BackBtn")?.addEventListener("click", ()=> showStep(1));
+
+// ===== Gửi chuyển (hook backend) =====
+qs("#tx5SubmitBtn")?.addEventListener("click", async ()=>{
+  qs("#tx5SubmitErr").textContent = "";
+  const to = qs("#tx5To").value.trim();
+  const amount = qn(qs("#tx5Amount").value);
+  const note = qs("#tx5Note").value.trim();
+  try{
+    // Trừ trước ở UI (tuỳ bạn — có thể để backend quyết)
+    const fee = Math.floor(amount * TX5_FEE_RATE);
+    const newBal = getUserBalance() - amount - fee;
+    if (newBal < 0) throw new Error("Số dư không đủ.");
+
+    // GỌI API THẬT TẠI ĐÂY
+    const res = await sendTransferAPI({ to, amount, note, fee });
+
+    // Cập nhật số dư UI
+    setUserBalance(newBal);
+
+    // Lưu lịch sử local (để hiện ngay, vẫn nên lấy từ DB khi reload)
+    appendLocalTransfer({
+      id: res.id || genTxId(),
+      status: "out",
+      amount,
+      to,
+      time: new Date().toLocaleString("vi-VN"),
+      note
+    });
+
+    // Success
+    qs("#tx5TxId").textContent = res.id || "TX-" + Date.now();
+    showStep(3);
+    // bạn có thể gọi renderTransferHistory() nếu modal lịch sử đang dùng
+  }catch(err){
+    qs("#tx5SubmitErr").textContent = err?.message || "Có lỗi xảy ra. Vui lòng thử lại.";
+  }
+});
+
+// Copy mã
+qs("#tx5CopyId")?.addEventListener("click", ()=>{
+  const id = qs("#tx5TxId").textContent.trim();
+  navigator.clipboard.writeText(id);
+});
+
+// ===== Mock API / Helpers =====
+async function sendTransferAPI(payload){
+  // TODO: thay bằng fetch tới backend của bạn.
+  // ví dụ:
+  // const r = await fetch('/api/transfer', {method:'POST', headers:{'Content-Type':'application/json', 'Authorization':'Bearer ...'}, body: JSON.stringify(payload)});
+  // if(!r.ok) throw new Error(await r.text());
+  // return await r.json();
+  await new Promise(r=>setTimeout(r, 450)); // giả lập delay
+  return { ok:true, id: genTxId() };
+}
+function genTxId(){ return "TX-" + Math.random().toString(36).slice(2,8).toUpperCase() + "-" + Date.now().toString().slice(-6); }
+
+function appendLocalTransfer(item){
+  const key = "transferHistory";
+  const arr = JSON.parse(localStorage.getItem(key)) || [];
+  arr.push(item);
+  localStorage.setItem(key, JSON.stringify(arr));
+}
+
+// ===== Public helper để mở từ nút "Chuyển xu" bất kỳ =====
+window.openTransferModal = openTransferModal;
+window.closeTransferModal = closeTransferModal;
+</script>
+
+
+
 
 
 
